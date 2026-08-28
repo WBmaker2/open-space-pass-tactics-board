@@ -1,0 +1,46 @@
+/* 모션: gi-pulse는 계획서가 허용한 두 필수 다음 행동 버튼에만 사용한다.
+   축소 모션에서는 애니메이션을 제거하고 3px 고정 외곽선과 "필수" 배지로 대체한다. */
+
+@keyframes gi-pulse-keyframes {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(180, 83, 9, 0.55);
+  }
+  50% {
+    transform: scale(1.03);
+    box-shadow: 0 0 0 8px rgba(180, 83, 9, 0);
+  }
+}
+
+.gi-pulse {
+  animation: gi-pulse-keyframes 1.4s ease-in-out infinite;
+}
+
+/* 도구모음 토글과 prefers-reduced-motion 모두 같은 대체를 적용한다. */
+@media (prefers-reduced-motion: reduce) {
+  html,
+  html.reduce-motion {
+    scroll-behavior: auto;
+  }
+
+  .gi-pulse {
+    animation: none;
+    outline: 3px solid var(--color-required);
+    outline-offset: 2px;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+html.reduce-motion .gi-pulse {
+  animation: none;
+  outline: 3px solid var(--color-required);
+  outline-offset: 2px;
+}

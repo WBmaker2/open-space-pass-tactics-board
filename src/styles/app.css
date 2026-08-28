@@ -1,0 +1,314 @@
+/* 기본 레이아웃과 공통 컴포넌트. 본문 16px 이상, 줄 간격 1.6 이상, 터치 목표 44px 이상. */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-ink);
+  background: var(--color-page-bg);
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.35;
+  margin: 0 0 var(--space-3);
+}
+
+p {
+  margin: 0 0 var(--space-3);
+}
+
+:focus-visible {
+  outline: var(--focus-width) solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.app {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: var(--space-3) var(--space-4) var(--space-6);
+}
+
+/* ------------------------------------------------------------------ 헤더 */
+.app-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-2) 0;
+  margin-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-board-line);
+}
+
+.app-header__title {
+  margin: 0;
+  font-weight: 700;
+  color: var(--color-ink-soft);
+}
+
+.app-header__tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.accessibility-toolbar {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.accessibility-toolbar__button,
+.update-history-button,
+.app-header__restart {
+  min-height: var(--touch-target);
+  min-width: var(--touch-target);
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--color-board-line);
+  border-radius: var(--radius-small);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font: inherit;
+  cursor: pointer;
+}
+
+.accessibility-toolbar__button[aria-pressed="true"] {
+  background: var(--color-attack-soft);
+  border-color: var(--color-attack);
+  font-weight: 700;
+}
+
+/* ---------------------------------------------------------------- 버튼 */
+.action-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--touch-target);
+  min-width: var(--touch-target);
+  padding: var(--space-2) var(--space-5);
+  border-radius: var(--radius-small);
+  border: 2px solid transparent;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.action-button--primary {
+  background: var(--color-attack);
+  color: #ffffff;
+}
+
+.action-button--secondary {
+  background: var(--color-surface);
+  color: var(--color-ink);
+  border-color: var(--color-board-line);
+}
+
+.action-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.action-button__badge {
+  display: inline-block;
+  padding: 0 var(--space-2);
+  border-radius: 999px;
+  background: var(--color-required);
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+/* ---------------------------------------------------------------- 입구 */
+.entrance h1 {
+  font-size: 1.9rem;
+}
+
+.entrance__goal {
+  font-size: 1.1rem;
+}
+
+.entrance__panel {
+  background: var(--color-surface);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-5);
+  margin-bottom: var(--space-4);
+}
+
+.entrance__missions {
+  margin: 0 0 var(--space-4);
+  padding-left: 1.4em;
+}
+
+.entrance__missions li {
+  margin-bottom: var(--space-1);
+}
+
+.entrance__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin: 0;
+}
+
+.entrance__meta dt {
+  font-weight: 700;
+  color: var(--color-ink-soft);
+}
+
+.entrance__meta dd {
+  margin: 0;
+}
+
+.entrance__notices {
+  background: var(--color-open-soft);
+  border-radius: var(--radius-card);
+  padding: var(--space-3) var(--space-5);
+  margin-bottom: var(--space-5);
+}
+
+.entrance__notices p {
+  margin: 0 0 var(--space-1);
+}
+
+.entrance__start {
+  font-size: 1.15rem;
+  padding: var(--space-3) var(--space-6);
+}
+
+/* ---------------------------------------------------------------- 진행 표시 */
+.progress-steps__mission {
+  margin: 0 0 var(--space-2);
+  font-weight: 700;
+}
+
+.progress-steps__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
+  list-style: none;
+  margin: 0 0 var(--space-4);
+  padding: 0;
+}
+
+.progress-steps__item {
+  padding: var(--space-1) var(--space-3);
+  border-radius: 999px;
+  border: 1px solid var(--color-board-line);
+  color: var(--color-ink-soft);
+  font-size: 0.9rem;
+}
+
+.progress-steps__item.is-current {
+  background: var(--color-attack-soft);
+  border-color: var(--color-attack);
+  color: var(--color-ink);
+  font-weight: 700;
+}
+
+/* ---------------------------------------------------------------- 대화상자 */
+.dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(45, 42, 38, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  z-index: 10;
+}
+
+.dialog {
+  background: var(--color-surface);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  max-width: 420px;
+  width: 100%;
+  max-height: 80vh;
+  overflow: auto;
+}
+
+.dialog__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-5);
+  border-bottom: 1px solid var(--color-board-line);
+}
+
+.dialog__header h2 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.dialog__close {
+  min-height: var(--touch-target);
+  min-width: var(--touch-target);
+  border: 1px solid var(--color-board-line);
+  border-radius: var(--radius-small);
+  background: var(--color-surface);
+  font: inherit;
+  cursor: pointer;
+}
+
+.dialog__body {
+  padding: var(--space-4) var(--space-5) var(--space-5);
+}
+
+.dialog__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+.update-history-list {
+  margin: 0;
+  padding-left: 1.2em;
+}
+
+.update-history-list li {
+  margin-bottom: var(--space-2);
+}
+
+/* ---------------------------------------------------------------- 오류 화면 */
+.error-boundary {
+  max-width: 480px;
+  margin: 20vh auto;
+  text-align: center;
+  padding: var(--space-5);
+}
+
+.error-boundary button {
+  min-height: var(--touch-target);
+  padding: var(--space-2) var(--space-5);
+  border-radius: var(--radius-small);
+  border: none;
+  background: var(--color-attack);
+  color: #ffffff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* ---------------------------------------------------------------- 학습 화면 자리 */
+.workbench,
+.report {
+  background: var(--color-surface);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-5);
+}
