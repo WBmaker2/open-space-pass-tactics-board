@@ -41,7 +41,9 @@ const server = createServer(async (req, res) => {
   const pathname = decodeURIComponent(url.pathname);
 
   if (pathname === "/" || pathname === BASE) {
-    await sendFile(res, "index.html") || send(res, 404, "index.html 없음");
+    if (!(await sendFile(res, "index.html"))) {
+      send(res, 404, "index.html 없음");
+    }
     return;
   }
   if (pathname.startsWith(BASE)) {
@@ -53,7 +55,9 @@ const server = createServer(async (req, res) => {
     }
   }
   // SPA 폴백
-  await sendFile(res, "index.html") || send(res, 404, "index.html 없음");
+  if (!(await sendFile(res, "index.html"))) {
+    send(res, 404, "index.html 없음");
+  }
 });
 
 server.listen(PORT, "127.0.0.1", () => {

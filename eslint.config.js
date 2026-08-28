@@ -22,9 +22,16 @@ export default tseslint.config(
     },
   },
   {
-    files: ["*.config.ts", "scripts/**/*.mjs", "eslint.config.js"],
+    files: ["*.config.ts", "eslint.config.js"],
     languageOptions: {
       globals: { ...globals.node },
+    },
+  },
+  {
+    // preview-pages.mjs는 Node 전용, generate-entrance-art.mjs는 브라우저 컨텍스트 코드를 다룬다.
+    files: ["scripts/**/*.mjs"],
+    languageOptions: {
+      globals: { ...globals.node, ...globals.browser },
     },
   },
 );
