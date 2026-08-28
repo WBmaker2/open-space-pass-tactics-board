@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // src와 tests 아래의 TS·TSX·CSS 파일이 500줄 미만인지 검사한다.
 // 500줄 이상인 파일이 있으면 경로와 줄 수를 출력하고 종료 코드 1로 실패한다.
-import { readdirSync, readFileSync, statSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { join, relative, sep } from "node:path";
 import process from "node:process";
 
