@@ -42,15 +42,15 @@ export const passDefender02: PassMissionRecord = {
       attack("A2", 5, 2),
       attack("A3", 5, 0, true),
       defend("D1", 4, 1),
-    ]),
+    ], [lane("lane-a3-a1", "A3", "A1", [])]),
     state("st-02-support-down", [
       attack("A1", 2, 3),
       attack("A2", 5, 2),
       attack("A3", 5, 0, true),
       defend("D1", 4, 1),
-    ]),
+    ], [lane("lane-a3-a1", "A3", "A1", [])]),
   ],
-  openLaneIds: ["lane-side"],
+  openLaneIds: ["lane-side", "lane-a3-a1"],
   approvedSupportCellIds: ["c2r1", "c2r3"],
   acceptedSequenceIds: [],
   sourceNote:

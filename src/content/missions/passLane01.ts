@@ -42,19 +42,19 @@ export const passLane01: PassMissionRecord = {
       attack("A2", 5, 1, true),
       attack("A3", 5, 3),
       defend("D1", 4, 2),
-    ]),
+    ], [lane("lane-a2-a1", "A2", "A1", [])]),
     state("st-01-support-down", [
       attack("A1", 2, 3),
       attack("A2", 5, 1, true),
       attack("A3", 5, 3),
       defend("D1", 4, 2),
-    ]),
+    ], [lane("lane-a2-a3", "A2", "A3", [])]),
   ],
-  openLaneIds: ["lane-a1-a2"],
+  openLaneIds: ["lane-a1-a2", "lane-a2-a1", "lane-a2-a3"],
   approvedSupportCellIds: ["c2r1", "c2r3"],
   acceptedSequenceIds: [],
   sourceNote:
-    "계획서 4.1 pass-lane-01 fixture. 3대1 상황에서 D1(c3r3)이 lane-a1-a3을 막고 있고 lane-a1-a2만 열려 있다. 승인 선택은 lane-a1-a2다.",
+    "계획서 4.1 pass-lane-01 fixture. 3대1 상황에서 D1(c3r3)이 lane-a1-a3을 막고 있고 lane-a1-a2만 열려 있다. 승인 선택은 lane-a1-a2다. 지원 이동 뒤 각각 lane-a2-a1/lane-a2-a3이 열린다.",
   reviewStatus: "pending",
   misconceptionGuard:
     "멀리 있는 패스가 항상 위험한 것은 아니에요. 수비가 길 위에 서 있는지로 확인해요.",

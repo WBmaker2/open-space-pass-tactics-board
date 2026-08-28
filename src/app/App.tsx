@@ -2,7 +2,6 @@ import { useEffect, useReducer, useRef, useState } from "react";
 import { AccessibilityToolbar } from "../accessibility/AccessibilityToolbar";
 import { ModalDialog } from "../components/ModalDialog";
 import { UpdateHistoryButton } from "../components/UpdateHistoryButton";
-import { missions } from "../content/missions";
 import { EntranceScreen } from "../features/pass-tactics/EntranceScreen";
 import { TacticsWorkbench } from "../features/pass-tactics/TacticsWorkbench";
 import { ErrorBoundary } from "./ErrorBoundary";
@@ -58,11 +57,7 @@ export function App() {
               <p>결과 기록 화면을 준비하고 있어요.</p>
             </section>
           ) : (
-            <TacticsWorkbench
-              mission={missions[state.missionIndex]}
-              progress={state.missions[state.missionIndex]}
-              headingRef={mainHeadingRef}
-            />
+            <TacticsWorkbench session={state} dispatch={dispatch} headingRef={mainHeadingRef} />
           )}
         </main>
 

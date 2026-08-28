@@ -80,7 +80,7 @@ export const passPlan06: PassMissionRecord = {
       attack("A4", 2, 4),
       defend("D1", 3, 2),
       defend("D2", 4, 2),
-    ]),
+    ], [lane("lane-a2-a1", "A2", "A1", [])]),
     state("st-06-right-support", [
       attack("A1", 2, 2),
       attack("A2", 4, 1),
@@ -88,9 +88,9 @@ export const passPlan06: PassMissionRecord = {
       attack("A4", 2, 4),
       defend("D1", 3, 2),
       defend("D2", 4, 2),
-    ]),
+    ], [lane("lane-a3-a1", "A3", "A1", [])]),
   ],
-  openLaneIds: ["lane-a1-a2", "lane-a1-a3"],
+  openLaneIds: ["lane-a1-a2", "lane-a1-a3", "lane-a2-a1", "lane-a3-a1"],
   approvedSupportCellIds: ["c5r1", "c5r3", "c2r2"],
   acceptedSequenceIds: ["seq-left", "seq-right"],
   sourceNote:
