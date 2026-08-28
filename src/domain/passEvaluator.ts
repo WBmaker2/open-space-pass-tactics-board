@@ -30,29 +30,25 @@ export function evaluatePass(state: TacticsState, laneId: string): PassEvaluatio
   };
 }
 
-/** 막힌 길을 막은 수비를 학생이 바르게 연결했는지 판정한다. */
-export function evaluateBlocker(
-  state: TacticsState,
-  laneId: string,
-  playerId: string,
-): PassEvaluation {
-  const lane = state.lanes.find((candidate) => candidate.id === laneId);
-  if (!lane || lane.blockedByPlayerIds.length === 0) {
-    return { accepted: false, laneId, blockedByPlayerIds: [], evidenceKeys: ["lane-not-blocked"] };
+/** 막힌 길이 있는 장면에서, 그 길을 막은 수비를 학생이 바르게 연결했는지 판정한다. */
+export function evaluateBlocker(state: TacticsState, playerId: string): PassEvaluation {
+  const blockedLane = state.lanes.find((candidate) => candidate.blockedByPlayerIds.length > 0);
+  if (!blockedLane) {
+    return { accepted: false, laneId: null, blockedByPlayerIds: [], evidenceKeys: ["lane-not-blocked"] };
   }
-  if (lane.blockedByPlayerIds.includes(playerId)) {
+  if (blockedLane.blockedByPlayerIds.includes(playerId)) {
     return {
       accepted: true,
-      laneId,
-      blockedByPlayerIds: [...lane.blockedByPlayerIds],
+      laneId: blockedLane.id,
+      blockedByPlayerIds: [...blockedLane.blockedByPlayerIds],
       evidenceKeys: ["blocker-found", `blocked-by:${playerId}`],
     };
   }
   return {
     accepted: false,
-    laneId,
-    blockedByPlayerIds: [...lane.blockedByPlayerIds],
-    evidenceKeys: ["blocker-not-on-lane", ...lane.blockedByPlayerIds.map((id) => `blocked-by:${id}`)],
+    laneId: blockedLane.id,
+    blockedByPlayerIds: [...blockedLane.blockedByPlayerIds],
+    evidenceKeys: ["blocker-not-on-lane", ...blockedLane.blockedByPlayerIds.map((id) => `blocked-by:${id}`)],
   };
 }
 

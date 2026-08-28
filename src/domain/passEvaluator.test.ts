@@ -185,16 +185,23 @@ describe("evaluateSequence — 두 단계 허용 순서 4건", () => {
 });
 
 describe("evaluateBlocker", () => {
-  it("막힌 길을 막은 수비를 바로 연결한다", () => {
-    const evaluation = evaluateBlocker(stateOf("pass-defender-02", "st-02-start"), "lane-center", "D1");
+  it("막힌 길이 있는 장면에서 막은 수비를 바로 연결한다", () => {
+    const evaluation = evaluateBlocker(stateOf("pass-defender-02", "st-02-start"), "D1");
     expect(evaluation.accepted).toBe(true);
     expect(evaluation.evidenceKeys).toContain("blocker-found");
+    expect(evaluation.laneId).toBe("lane-center");
   });
 
   it("막지 않은 선수를 고르면 오답이다", () => {
-    const evaluation = evaluateBlocker(stateOf("pass-defender-02", "st-02-start"), "lane-center", "A2");
+    const evaluation = evaluateBlocker(stateOf("pass-defender-02", "st-02-start"), "A2");
     expect(evaluation.accepted).toBe(false);
     expect(evaluation.evidenceKeys).toContain("blocker-not-on-lane");
+  });
+
+  it("막힌 길이 없는 장면에서는 물어보지 않는 선택도 오답으로 처리한다", () => {
+    const evaluation = evaluateBlocker(stateOf("pass-two-options-04", "st-04-start"), "D1");
+    expect(evaluation.accepted).toBe(false);
+    expect(evaluation.evidenceKeys).toContain("lane-not-blocked");
   });
 });
 
