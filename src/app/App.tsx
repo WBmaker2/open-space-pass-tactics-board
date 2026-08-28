@@ -4,6 +4,7 @@ import { ModalDialog } from "../components/ModalDialog";
 import { UpdateHistoryButton } from "../components/UpdateHistoryButton";
 import { EntranceScreen } from "../features/pass-tactics/EntranceScreen";
 import { TacticsWorkbench } from "../features/pass-tactics/TacticsWorkbench";
+import { LearningReport } from "../features/report/LearningReport";
 import { ErrorBoundary } from "./ErrorBoundary";
 import { initialSessionState, sessionReducer } from "./sessionReducer";
 
@@ -50,12 +51,7 @@ export function App() {
               headingRef={mainHeadingRef}
             />
           ) : state.step === "REPORT" ? (
-            <section className="report" aria-labelledby="report-heading">
-              <h1 id="report-heading" ref={mainHeadingRef} tabIndex={-1}>
-                전술 기록
-              </h1>
-              <p>결과 기록 화면을 준비하고 있어요.</p>
-            </section>
+            <LearningReport session={state} headingRef={mainHeadingRef} />
           ) : (
             <TacticsWorkbench session={state} dispatch={dispatch} headingRef={mainHeadingRef} />
           )}
