@@ -2,6 +2,7 @@ import type { RefObject } from "react";
 import { ActionButton } from "../../components/ActionButton";
 import { UpdateHistoryButton } from "../../components/UpdateHistoryButton";
 import { missions } from "../../content/missions";
+import entranceArt from "../../assets/generated/bright-gym-tactics-board.webp";
 
 interface EntranceScreenProps {
   readonly onStart: () => void;
@@ -14,6 +15,7 @@ export function EntranceScreen({ onStart, headingRef }: EntranceScreenProps) {
       <h1 id="entrance-heading" ref={headingRef} tabIndex={-1}>
         빈 공간 패스 전술판
       </h1>
+      <img src={entranceArt} alt="" className="entrance__art" aria-hidden="true" />
       <p className="entrance__goal">
         수비가 막지 않은 <strong>패스 길</strong>과 패스 뒤 <strong>지원 위치</strong>를 찾고, 선택을
         공간 근거로 설명하는 체육 전술 학습이에요.

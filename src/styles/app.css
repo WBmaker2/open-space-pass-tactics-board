@@ -312,3 +312,13 @@ p {
   box-shadow: var(--shadow-card);
   padding: var(--space-5);
 }
+
+.entrance__art {
+  display: block;
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+  margin: 0 auto var(--space-4);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
