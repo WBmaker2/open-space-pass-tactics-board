@@ -83,4 +83,12 @@
 - [`work/education-webapp-redesign-plan.md`](</Volumes/ External Drive 256G/Dev2/codex/open-space-pass-tactics-board/work/education-webapp-redesign-plan.md>) — 구현 계획과 진행 기록
 - [`work/education-webapp-redesign-audit.md`](</Volumes/ External Drive 256G/Dev2/codex/open-space-pass-tactics-board/work/education-webapp-redesign-audit.md>) — 초기/최종 UI 감사
 
-이번 요청에는 커밋·푸시·공개 배포가 포함되지 않았으므로 공개 URL이나 HVC 등록 상태는 만들지 않았습니다. 실제 학급 사용 전에는 체육 교과 내용 검토, 교사/학생 수동 사용성 확인, 실제 Safari/보조공학 검토를 별도 게이트로 진행해야 합니다.
+## 릴리스 결과
+
+- 리디자인 커밋: `9a55b89`
+- E2E 안정화 커밋: `dfc4587`
+- CI: [33295157428](https://github.com/WBmaker2/open-space-pass-tactics-board/actions/runs/33295157428) 성공 — `npm run verify`, E2E 12개 포함, flaky 0건
+- Deploy Pages: [33295157473](https://github.com/WBmaker2/open-space-pass-tactics-board/actions/runs/33295157473) 성공
+- 공개 결과: [https://wbmaker2.github.io/open-space-pass-tactics-board/](https://wbmaker2.github.io/open-space-pass-tactics-board/)
+
+공개 URL에서 제목·favicon·생성 이미지 응답을 확인했고, 여섯 미션을 실제로 완료해 `전술 기록`과 6개 기록 카드를 확인했습니다. 실제 학급 사용 전에는 체육 교과 내용 검토, 교사/학생 수동 사용성 확인, 실제 Safari/보조공학 검토를 별도 게이트로 진행해야 합니다. HVC 관리자 등록은 별도 권한 작업으로 남아 있습니다.

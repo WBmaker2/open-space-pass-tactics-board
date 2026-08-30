@@ -200,7 +200,7 @@ Method: degraded single-context (이 세션에 `spawn_agent`가 노출되지 않
 | `gi-pulse` 범위 | 완료 | `StepPanels.tsx`의 두 필수 버튼만 사용, reduced-motion 대체 확인 |
 | 자산 안전 | 완료 | 기존 WebP 유지, 새 이미지 0개, 별도 자산 기록 작성 |
 | 자동 품질 | 완료 | lint/typecheck/106 tests/a11y 3/visual+release 11/line check/build/diff check |
-| 공식 E2E 명령 | 보류 | 다른 프로젝트의 4173 포트 점유로 `preview-pages.mjs` 시작 불가 |
+| 공식 E2E 명령 | CI 완료 / 로컬 보류 | CI [33295157428](https://github.com/WBmaker2/open-space-pass-tactics-board/actions/runs/33295157428)에서 12개 E2E flaky 0건; 로컬은 다른 프로젝트의 4173 포트 점유로 `preview-pages.mjs` 시작 불가 |
 | VoiceOver·교과·보조공학 사람 검수 | 보류 | 이번 범위에서 실행하지 않음; `reviewStatus: pending` 유지 |
 
 ### 최종 산출물
