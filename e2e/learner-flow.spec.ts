@@ -18,7 +18,7 @@ test("3대1 안내 미션에서 열린 길을 고르고 근거를 함께 남긴�
   await page.getByRole("button", { name: "생각 확인하기" }).click();
 
   await expect(page.getByRole("status")).toContainText("열려 있어요");
-  expect(page.getByRole("checkbox", { name: "고른 길 사이에 수비가 없어요" })).toBeChecked();
+  await expect(page.getByRole("checkbox", { name: "고른 길 사이에 수비가 없어요" })).toBeChecked();
   expect(consoleErrors).toEqual([]);
 });
 
