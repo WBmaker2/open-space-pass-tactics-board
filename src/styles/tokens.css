@@ -1,38 +1,44 @@
-/* 밝은 교실용 라이트 모드 디자인 토큰. 다크 모드는 계획상 제외다. */
+/* 체육관 작전 노트의 라이트 모드 토큰. 다크 모드는 제품 범위에서 제외한다. */
 :root {
   color-scheme: light;
 
-  --color-page-bg: #f4f1ea;
-  --color-surface: #ffffff;
-  --color-board-bg: #f8e9c9;
-  --color-board-line: #c9a35c;
-  --color-court-line: #e3cba0;
+  --color-page-bg: #f6f2e9;
+  --color-surface: #fffdf8;
+  --color-surface-strong: #ffffff;
+  --color-surface-muted: #edf3eb;
+  --color-board-bg: #e7f0df;
+  --color-board-line: #a9c0a2;
+  --color-court-line: #bdd0b5;
 
-  --color-ink: #2d2a26;
-  --color-ink-soft: #5c564e;
-  --color-ink-faint: #857d72;
+  --color-ink: #17332f;
+  --color-ink-soft: #4b625c;
+  --color-ink-faint: #5f766f;
 
-  --color-attack: #2b6cb0;
-  --color-attack-soft: #dbe9f8;
-  --color-defense: #c2410c;
-  --color-defense-soft: #fbe6dc;
-  --color-open: #2f855a;
-  --color-open-soft: #e0f2e9;
-  --color-blocked: #b91c1c;
-  --color-blocked-soft: #fde3e3;
-  --color-ball: #ffffff;
+  --color-attack: #176b61;
+  --color-attack-soft: #d8eee6;
+  --color-defense: #c5532d;
+  --color-defense-soft: #f8ddd1;
+  --color-open: #2b7955;
+  --color-open-soft: #ddeedf;
+  --color-blocked: #a84a1d;
+  --color-blocked-soft: #fae4d9;
+  --color-ball: #fffdf8;
 
-  --color-accent: #1d4ed8;
-  --color-focus: #1d4ed8;
-  --color-required: #b45309;
+  --color-accent: #176b61;
+  --color-focus: #0b5ed7;
+  --color-required: #a84a1d;
 
   --radius-card: 16px;
-  --radius-small: 10px;
-  --shadow-card: 0 2px 10px rgba(45, 42, 38, 0.12);
+  --radius-small: 12px;
+  --radius-control: 10px;
+  --shadow-card: 0 14px 34px rgba(23, 51, 47, 0.08);
+  --shadow-soft: 0 5px 16px rgba(23, 51, 47, 0.08);
+  --shadow-board: 0 12px 26px rgba(67, 99, 68, 0.14);
 
   --font-body:
-    -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic",
-    sans-serif;
+    "Avenir Next", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR",
+    "Malgun Gothic", sans-serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
 
   --space-1: 4px;
   --space-2: 8px;
@@ -40,12 +46,13 @@
   --space-4: 16px;
   --space-5: 24px;
   --space-6: 32px;
+  --space-7: 48px;
 
   --touch-target: 44px;
   --focus-width: 3px;
 }
 
-/* 접근성 도구모음의 글자 크게 (브라우저 200% 확대와 함께 동작한다) */
+/* 접근성 도구모음의 글자 크게 (브라우저 200% 확대와 함께 동작한다). */
 html.font-large {
   font-size: 125%;
 }

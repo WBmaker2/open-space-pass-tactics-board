@@ -1,0 +1,82 @@
+/* 모달과 오류 화면은 내용보다 앞서지 않도록 필요한 만큼만 차지한다. */
+.dialog-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  background: rgba(23, 51, 47, 0.58);
+}
+
+.dialog {
+  width: min(100%, 460px);
+  max-height: 80vh;
+  overflow: auto;
+  border: 1px solid var(--color-board-line);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+
+.dialog__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--color-board-line);
+}
+
+.dialog__header h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.dialog__close {
+  min-width: var(--touch-target);
+  min-height: var(--touch-target);
+  border: 1px solid var(--color-board-line);
+  border-radius: var(--radius-control);
+  background: transparent;
+  color: var(--color-ink);
+  font-weight: 700;
+}
+
+.dialog__body {
+  padding: var(--space-4) var(--space-5) var(--space-5);
+}
+
+.dialog__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+.update-history-list {
+  margin: 0;
+  padding-left: 1.2em;
+}
+
+.update-history-list li {
+  margin-bottom: var(--space-2);
+}
+
+.error-boundary {
+  max-width: 480px;
+  margin: 20vh auto;
+  padding: var(--space-5);
+  text-align: center;
+}
+
+.error-boundary button {
+  min-height: var(--touch-target);
+  padding: var(--space-2) var(--space-5);
+  border: 0;
+  border-radius: var(--radius-control);
+  background: var(--color-attack);
+  color: var(--color-surface-strong);
+  font-weight: 800;
+}

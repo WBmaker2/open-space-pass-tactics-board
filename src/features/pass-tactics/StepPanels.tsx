@@ -27,7 +27,7 @@ function laneChoiceLabel(state: TacticsState, laneId: string): string {
   const from = state.players.find((player) => player.id === lane.fromPlayerId);
   const to = state.players.find((player) => player.id === lane.toPlayerId);
   if (!from || !to) return laneId;
-  return `${from.roleLabel} → ${to.roleLabel} (${cellIdOf(from.cell)} → ${cellIdOf(to.cell)})`;
+  return `${from.roleLabel} → ${to.roleLabel}`;
 }
 
 export function EvidenceChips({
@@ -66,7 +66,9 @@ type ObserveProps = PanelSharedProps & { readonly boardState: TacticsState };
 
 export function ObservePanel({ boardState, progress }: ObserveProps) {
   const answered = progress.observePlayerId !== null;
-  if (!answered) return null;
+  if (!answered) {
+    return <p className="workbench__prompt">공 아이콘이 있는 선수를 경기판에서 찾아 눌러 보세요.</p>;
+  }
   const holder = boardState.players.find((player) => player.hasBall);
   const correct = progress.observePlayerId === holder?.id;
   return correct ? (
@@ -113,7 +115,7 @@ export function PredictPanel({
       <fieldset className="field-group">
         <legend>패스 길 고르기</legend>
         {predictState.lanes.map((lane) => (
-          <label key={lane.id} className="choice-label">
+          <label key={lane.id} className="choice-label choice-label--lane">
             <input
               type="radio"
               name="predict-lane"
@@ -239,7 +241,7 @@ export function PassPanel({
       <fieldset className="field-group">
         <legend>패스 길 고르기</legend>
         {boardState.lanes.map((lane) => (
-          <label key={lane.id} className="choice-label">
+          <label key={lane.id} className="choice-label choice-label--lane">
             <input
               type="radio"
               name="pass-lane"
@@ -361,7 +363,7 @@ export function RevealPanel({
         <fieldset className="field-group">
           <legend>새로운 패스 길 고르기</legend>
           {boardState.lanes.map((lane) => (
-            <label key={lane.id} className="choice-label">
+            <label key={lane.id} className="choice-label choice-label--lane">
               <input
                 type="radio"
                 name="reveal-lane"

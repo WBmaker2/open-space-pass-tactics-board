@@ -13,19 +13,22 @@ interface FeedbackPanelProps {
 export function FeedbackPanel({ tone, heading, sentences, showModelNote = false }: FeedbackPanelProps) {
   return (
     <div className={`feedback feedback--${tone}`} role="status">
-      <p className="feedback__heading">{heading}</p>
-      {sentences.length > 0 ? (
-        <ul className="feedback__list">
-          {sentences.map((sentence, index) => (
-            <li key={`${index}-${sentence}`}>{sentence}</li>
-          ))}
-        </ul>
-      ) : null}
-      {showModelNote ? (
-        <p className="feedback__model-note">
-          이 판은 연습용 모형이에요. 실제 경기 전체를 대신하지 않아요.
-        </p>
-      ) : null}
+      <div className="feedback__marker" aria-hidden="true" />
+      <div className="feedback__body">
+        <h3 className="feedback__heading">{heading}</h3>
+        {sentences.length > 0 ? (
+          <ul className="feedback__list">
+            {sentences.map((sentence, index) => (
+              <li key={`${index}-${sentence}`}>{sentence}</li>
+            ))}
+          </ul>
+        ) : null}
+        {showModelNote ? (
+          <p className="feedback__model-note">
+            이 판은 연습용 모형이에요. 실제 경기 전체를 대신하지 않아요.
+          </p>
+        ) : null}
+      </div>
     </div>
   );
 }

@@ -5,3 +5,6 @@ playwright-report/
 test-results/
 .DS_Store
 *.local
+.playwright-mcp/
+output/
+design-system/open-space-pass-tactics-board/

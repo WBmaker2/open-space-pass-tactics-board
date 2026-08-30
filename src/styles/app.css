@@ -1,10 +1,11 @@
-/* 기본 레이아웃과 공통 컴포넌트. 본문 16px 이상, 줄 간격 1.6 이상, 터치 목표 44px 이상. */
+/* 제품 공통 레이아웃과 표면. 4px 간격 체계와 44px 조작 목표를 지킨다. */
 * {
   box-sizing: border-box;
 }
 
 html {
   font-size: 100%;
+  scroll-padding-top: var(--space-6);
 }
 
 body {
@@ -14,13 +15,29 @@ body {
   line-height: 1.6;
   color: var(--color-ink);
   background: var(--color-page-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+::selection {
+  color: var(--color-surface-strong);
+  background: var(--color-attack);
 }
 
 h1,
 h2,
 h3 {
-  line-height: 1.35;
   margin: 0 0 var(--space-3);
+  line-height: 1.25;
+  letter-spacing: -0.025em;
 }
 
 p {
@@ -29,296 +46,402 @@ p {
 
 :focus-visible {
   outline: var(--focus-width) solid var(--color-focus);
-  outline-offset: 2px;
+  outline-offset: 3px;
 }
 
 .app {
-  max-width: 960px;
+  width: min(100%, 1120px);
+  min-height: 100vh;
   margin: 0 auto;
-  padding: var(--space-3) var(--space-4) var(--space-6);
+  padding: var(--space-5) var(--space-6) var(--space-7);
 }
 
-/* ------------------------------------------------------------------ 헤더 */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: var(--space-4);
+  z-index: 20;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-control);
+  background: var(--color-ink);
+  color: var(--color-surface-strong);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: var(--space-3);
+}
+
+/* 헤더 */
 .app-header {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-2);
-  padding: var(--space-2) 0;
-  margin-bottom: var(--space-4);
+  gap: var(--space-4);
+  padding: 0 0 var(--space-4);
+  margin-bottom: var(--space-6);
   border-bottom: 1px solid var(--color-board-line);
+}
+
+.app-header__brand,
+.app-header__tools,
+.accessibility-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.app-header__mark {
+  width: 12px;
+  height: 12px;
+  flex: 0 0 auto;
+  border: 3px solid var(--color-attack);
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px var(--color-attack-soft);
 }
 
 .app-header__title {
   margin: 0;
-  font-weight: 700;
-  color: var(--color-ink-soft);
+  color: var(--color-ink);
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
 }
 
 .app-header__tools {
-  display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-2);
-}
-
-.accessibility-toolbar {
-  display: flex;
-  gap: var(--space-1);
+  justify-content: flex-end;
 }
 
 .accessibility-toolbar__button,
 .update-history-button,
 .app-header__restart {
   min-height: var(--touch-target);
-  min-width: var(--touch-target);
-  padding: var(--space-1) var(--space-3);
+  padding: var(--space-2) var(--space-3);
   border: 1px solid var(--color-board-line);
-  border-radius: var(--radius-small);
-  background: var(--color-surface);
-  color: var(--color-ink);
-  font: inherit;
-  cursor: pointer;
+  border-radius: var(--radius-control);
+  background: transparent;
+  color: var(--color-ink-soft);
+  font-size: 0.875rem;
+  font-weight: 700;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.accessibility-toolbar__button:hover,
+.update-history-button:hover,
+.app-header__restart:hover {
+  border-color: var(--color-attack);
+  background: var(--color-surface-strong);
+  color: var(--color-attack);
+  box-shadow: var(--shadow-soft);
 }
 
 .accessibility-toolbar__button[aria-pressed="true"] {
-  background: var(--color-attack-soft);
   border-color: var(--color-attack);
-  font-weight: 700;
+  background: var(--color-attack-soft);
+  color: var(--color-attack);
 }
 
-/* ---------------------------------------------------------------- 버튼 */
+/* 버튼 */
 .action-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
-  min-height: var(--touch-target);
   min-width: var(--touch-target);
+  min-height: 48px;
   padding: var(--space-2) var(--space-5);
-  border-radius: var(--radius-small);
-  border: 2px solid transparent;
-  font: inherit;
-  font-weight: 700;
-  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: var(--radius-control);
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease,
+    box-shadow 180ms ease, transform 180ms ease;
 }
 
 .action-button--primary {
   background: var(--color-attack);
-  color: #ffffff;
+  color: var(--color-surface-strong);
+  box-shadow: 0 6px 14px rgba(23, 107, 97, 0.2);
+}
+
+.action-button--primary:hover:not(:disabled) {
+  background: #12584f;
+  box-shadow: 0 8px 18px rgba(23, 107, 97, 0.24);
+  transform: translateY(-1px);
 }
 
 .action-button--secondary {
-  background: var(--color-surface);
-  color: var(--color-ink);
   border-color: var(--color-board-line);
+  background: var(--color-surface-strong);
+  color: var(--color-ink);
+}
+
+.action-button--secondary:hover:not(:disabled) {
+  border-color: var(--color-attack);
+  background: var(--color-attack-soft);
+  color: var(--color-attack);
 }
 
 .action-button:disabled {
-  opacity: 0.55;
+  border-color: var(--color-board-line);
+  background: #e5e8e2;
+  color: #68736e;
   cursor: not-allowed;
+  box-shadow: none;
 }
 
 .action-button__badge {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
   padding: 0 var(--space-2);
   border-radius: 999px;
-  background: var(--color-required);
-  color: #ffffff;
-  font-size: 0.8rem;
-  font-weight: 700;
+  background: var(--color-surface-strong);
+  color: var(--color-required);
+  font-size: 0.75rem;
+  font-weight: 900;
 }
 
-/* ---------------------------------------------------------------- 입구 */
+/* 입구 */
+.entrance {
+  padding-bottom: var(--space-6);
+}
+
+.entrance__hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(290px, 0.78fr);
+  align-items: center;
+  gap: clamp(var(--space-6), 7vw, var(--space-7));
+  padding: var(--space-4) 0 var(--space-7);
+  border-bottom: 1px solid var(--color-board-line);
+}
+
 .entrance h1 {
-  font-size: 1.9rem;
+  max-width: 8ch;
+  margin-bottom: var(--space-5);
+  font-size: clamp(2.5rem, 6vw, 4.75rem);
+  font-weight: 900;
 }
 
 .entrance__goal {
-  font-size: 1.1rem;
+  max-width: 47ch;
+  margin-bottom: var(--space-5);
+  color: var(--color-ink-soft);
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  line-height: 1.7;
 }
 
-.entrance__panel {
-  background: var(--color-surface);
-  border-radius: var(--radius-card);
-  box-shadow: var(--shadow-card);
-  padding: var(--space-5);
-  margin-bottom: var(--space-4);
-}
-
-.entrance__missions {
-  margin: 0 0 var(--space-4);
-  padding-left: 1.4em;
-}
-
-.entrance__missions li {
-  margin-bottom: var(--space-1);
+.entrance__goal strong {
+  color: var(--color-attack);
 }
 
 .entrance__meta {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-4);
+  gap: var(--space-3) var(--space-6);
   margin: 0;
 }
 
+.entrance__meta div {
+  display: grid;
+  gap: 2px;
+}
+
 .entrance__meta dt {
-  font-weight: 700;
-  color: var(--color-ink-soft);
+  color: var(--color-ink-faint);
+  font-size: 0.78rem;
+  font-weight: 800;
 }
 
 .entrance__meta dd {
   margin: 0;
+  font-weight: 800;
 }
 
-.entrance__notices {
-  background: var(--color-open-soft);
-  border-radius: var(--radius-card);
-  padding: var(--space-3) var(--space-5);
-  margin-bottom: var(--space-5);
-}
-
-.entrance__notices p {
-  margin: 0 0 var(--space-1);
-}
-
-.entrance__start {
-  font-size: 1.15rem;
-  padding: var(--space-3) var(--space-6);
-}
-
-/* ---------------------------------------------------------------- 진행 표시 */
-.progress-steps__mission {
-  margin: 0 0 var(--space-2);
-  font-weight: 700;
-}
-
-.progress-steps__list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-1) var(--space-3);
-  list-style: none;
-  margin: 0 0 var(--space-4);
-  padding: 0;
-}
-
-.progress-steps__item {
-  padding: var(--space-1) var(--space-3);
-  border-radius: 999px;
-  border: 1px solid var(--color-board-line);
-  color: var(--color-ink-soft);
-  font-size: 0.9rem;
-}
-
-.progress-steps__item.is-current {
-  background: var(--color-attack-soft);
-  border-color: var(--color-attack);
-  color: var(--color-ink);
-  font-weight: 700;
-}
-
-/* ---------------------------------------------------------------- 대화상자 */
-.dialog-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(45, 42, 38, 0.45);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-4);
-  z-index: 10;
-}
-
-.dialog {
-  background: var(--color-surface);
-  border-radius: var(--radius-card);
-  box-shadow: var(--shadow-card);
-  max-width: 420px;
-  width: 100%;
-  max-height: 80vh;
-  overflow: auto;
-}
-
-.dialog__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-3);
-  padding: var(--space-3) var(--space-5);
-  border-bottom: 1px solid var(--color-board-line);
-}
-
-.dialog__header h2 {
+.entrance__visual {
   margin: 0;
-  font-size: 1.15rem;
-}
-
-.dialog__close {
-  min-height: var(--touch-target);
-  min-width: var(--touch-target);
+  padding: var(--space-2);
   border: 1px solid var(--color-board-line);
-  border-radius: var(--radius-small);
-  background: var(--color-surface);
-  font: inherit;
-  cursor: pointer;
-}
-
-.dialog__body {
-  padding: var(--space-4) var(--space-5) var(--space-5);
-}
-
-.dialog__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3);
-  margin-top: var(--space-4);
-}
-
-.update-history-list {
-  margin: 0;
-  padding-left: 1.2em;
-}
-
-.update-history-list li {
-  margin-bottom: var(--space-2);
-}
-
-/* ---------------------------------------------------------------- 오류 화면 */
-.error-boundary {
-  max-width: 480px;
-  margin: 20vh auto;
-  text-align: center;
-  padding: var(--space-5);
-}
-
-.error-boundary button {
-  min-height: var(--touch-target);
-  padding: var(--space-2) var(--space-5);
-  border-radius: var(--radius-small);
-  border: none;
-  background: var(--color-attack);
-  color: #ffffff;
-  font: inherit;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-/* ---------------------------------------------------------------- 학습 화면 자리 */
-.workbench,
-.report {
-  background: var(--color-surface);
   border-radius: var(--radius-card);
-  box-shadow: var(--shadow-card);
-  padding: var(--space-5);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-board);
+  transform: rotate(1deg);
 }
 
 .entrance__art {
   display: block;
   width: 100%;
-  max-width: 560px;
   height: auto;
-  margin: 0 auto var(--space-4);
-  border-radius: var(--radius-card);
-  box-shadow: var(--shadow-card);
+  border-radius: var(--radius-small);
+}
+
+.entrance__visual figcaption {
+  padding: var(--space-2) var(--space-2) var(--space-1);
+  color: var(--color-ink-soft);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.entrance__panel {
+  margin: var(--space-7) 0 var(--space-5);
+  padding: var(--space-5) 0 0;
+  border-top: 3px solid var(--color-ink);
+}
+
+.entrance__panel-heading,
+.workbench__board-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.entrance__panel-heading h2 {
+  margin-bottom: var(--space-1);
+  font-size: 1.35rem;
+}
+
+.entrance__panel-heading p {
+  margin: 0;
+  color: var(--color-ink-soft);
+}
+
+.entrance__count,
+.workbench__board-size {
+  flex: 0 0 auto;
+  color: var(--color-ink-faint);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.entrance__missions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 var(--space-6);
+  margin: var(--space-5) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.entrance__missions li {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  min-height: 56px;
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-board-line);
+  font-weight: 800;
+}
+
+.entrance__mission-number {
+  color: var(--color-defense);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.entrance__notices {
+  display: grid;
+  gap: var(--space-2);
+  margin-bottom: var(--space-5);
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid var(--color-board-line);
+  border-radius: var(--radius-small);
+  background: var(--color-surface-muted);
+}
+
+.entrance__notices p {
+  max-width: 72ch;
+  margin: 0;
+  color: var(--color-ink-soft);
+}
+
+.entrance__notices strong {
+  color: var(--color-ink);
+}
+
+.entrance__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.entrance__start {
+  min-width: 180px;
+  font-size: 1.05rem;
+}
+
+@media (max-width: 767px) {
+  .app {
+    padding: var(--space-4) var(--space-4) var(--space-6);
+  }
+
+  .app-header {
+    align-items: flex-start;
+    margin-bottom: var(--space-5);
+  }
+
+  .app-header__tools {
+    justify-content: flex-start;
+  }
+
+  .entrance__hero {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+    padding-bottom: var(--space-6);
+  }
+
+  .entrance__visual {
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  .entrance__missions {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+@media (max-width: 479px) {
+  .app-header {
+    flex-direction: column;
+  }
+
+  .app-header__tools {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .app-header__tools > * {
+    max-width: 100%;
+  }
+
+  .accessibility-toolbar__button,
+  .update-history-button,
+  .app-header__restart {
+    padding-inline: var(--space-2);
+    font-size: 0.8rem;
+  }
+
+  .entrance h1 {
+    font-size: clamp(2.35rem, 14vw, 3.25rem);
+  }
+
+  .entrance__actions,
+  .entrance__actions .action-button,
+  .entrance__actions .update-history-button {
+    width: 100%;
+  }
+
+  .entrance__panel-heading,
+  .workbench__board-heading {
+    align-items: flex-start;
+  }
+
 }

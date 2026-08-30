@@ -86,6 +86,13 @@ export function TacticsWorkbench({ session, dispatch, headingRef }: TacticsWorkb
 
       <div className="workbench__grid">
         <section className="workbench__board" aria-label="경기판">
+          <div className="workbench__board-heading">
+            <div>
+              <h2>지금 판 읽기</h2>
+              <p>공과 선수 사이의 빈 길을 천천히 찾아보세요.</p>
+            </div>
+            <span className="workbench__board-size">7 × 5 칸</span>
+          </div>
           <TacticsBoard
             state={boardState}
             selectablePlayerIds={selectablePlayerIdsFor(step, boardState)}
@@ -110,136 +117,138 @@ export function TacticsWorkbench({ session, dispatch, headingRef }: TacticsWorkb
         </section>
 
         <section className="workbench__panel" aria-label="현재 할 일">
-          <p className="workbench__step-label">{stepLabel(step)} 단계</p>
-          {step === "OBSERVE" ? (
-            <ObservePanel
-              mission={mission}
-              boardState={boardState}
-              progress={progress}
-            />
-          ) : null}
-          {step === "PREDICT" ? (
-            <PredictPanel
-              mission={mission}
-              predictState={predictState}
-              selectedLaneId={selectedLaneId}
-              onSelectLane={setSelectedLaneId}
-              evidenceKeys={evidenceKeys}
-              onToggleEvidence={setEvidenceKeys}
-              onConfirm={() =>
-                answer({
-                  type: "ANSWER_PREDICT",
-                  missionIndex,
-                  laneId: selectedLaneId ?? "",
-                  evidenceKeys,
-                  revision,
-                })
-              }
-              progress={progress}
-            />
-          ) : null}
-          {step === "MOVE" ? (
-            <MovePanel
-              mission={mission}
-              stateId={progress.stateId}
-              selectedCellId={selectedCellId}
-              onSelectCell={setSelectedCellId}
-              onConfirm={() => {
-                const transition = mission.flow.move?.transitions.find(
-                  (candidate) =>
-                    candidate.fromStateId === progress.stateId &&
-                    candidate.toCellId === selectedCellId,
-                );
-                if (transition) {
+          <div className="workbench__panel-heading">
+            <p className="workbench__step-label">{stepLabel(step)} 단계</p>
+            <p className="workbench__panel-note">판에서 찾은 근거를 골라 기록해요.</p>
+          </div>
+          <div className="workbench__panel-body">
+            {step === "OBSERVE" ? (
+              <ObservePanel mission={mission} boardState={boardState} progress={progress} />
+            ) : null}
+            {step === "PREDICT" ? (
+              <PredictPanel
+                mission={mission}
+                predictState={predictState}
+                selectedLaneId={selectedLaneId}
+                onSelectLane={setSelectedLaneId}
+                evidenceKeys={evidenceKeys}
+                onToggleEvidence={setEvidenceKeys}
+                onConfirm={() =>
                   answer({
-                    type: "CHOOSE_MOVE",
+                    type: "ANSWER_PREDICT",
                     missionIndex,
-                    playerId: transition.playerId,
-                    toCellId: selectedCellId ?? "",
-                    revision,
-                  });
-                }
-              }}
-              progress={progress}
-            />
-          ) : null}
-          {step === "PASS" ? (
-            <PassPanel
-              mission={mission}
-              boardState={boardState}
-              progress={progress}
-              selectedLaneId={selectedLaneId}
-              onSelectLane={setSelectedLaneId}
-              evidenceKeys={evidenceKeys}
-              onToggleEvidence={setEvidenceKeys}
-              onConfirm={(deferred) =>
-                answer({
-                  type: "ANSWER_PASS",
-                  missionIndex,
-                  laneId: deferred
-                    ? (selectedLaneId ?? progress.pass?.laneId ?? "")
-                    : (selectedLaneId ?? ""),
-                  evidenceKeys,
-                  blockerPlayerId: selectedPlayerId,
-                  deferred,
-                  revision,
-                })
-              }
-            />
-          ) : null}
-          {step === "REVEAL" ? (
-            <RevealPanel
-              mission={mission}
-              boardState={boardState}
-              progress={progress}
-              revealChoice={revealChoice}
-              onSelectChoice={setRevealChoice}
-              selectedLaneId={selectedLaneId}
-              onSelectLane={setSelectedLaneId}
-              onConfirm={() =>
-                answer({
-                  type: "ANSWER_REVEAL",
-                  missionIndex,
-                  keptPlan: revealChoice === "keep",
-                  revisedLaneId: revealChoice === "revise" ? selectedLaneId : null,
-                  revision,
-                })
-              }
-            />
-          ) : null}
-          {step === "SUPPORT" ? (
-            <SupportPanel
-              mission={mission}
-              stateId={progress.stateId}
-              progress={progress}
-              selectedCellId={selectedCellId}
-              onSelectCell={setSelectedCellId}
-              evidenceKeys={evidenceKeys}
-              onToggleEvidence={setEvidenceKeys}
-              onConfirm={() => {
-                const transition = mission.flow.support?.transitions.find(
-                  (candidate) =>
-                    candidate.fromStateId === progress.stateId &&
-                    candidate.toCellId === selectedCellId,
-                );
-                if (transition) {
-                  answer({
-                    type: "ANSWER_SUPPORT",
-                    missionIndex,
-                    playerId: transition.playerId,
-                    toCellId: selectedCellId ?? "",
+                    laneId: selectedLaneId ?? "",
                     evidenceKeys,
                     revision,
-                  });
+                  })
                 }
-              }}
-            />
-          ) : null}
+                progress={progress}
+              />
+            ) : null}
+            {step === "MOVE" ? (
+              <MovePanel
+                mission={mission}
+                stateId={progress.stateId}
+                selectedCellId={selectedCellId}
+                onSelectCell={setSelectedCellId}
+                onConfirm={() => {
+                  const transition = mission.flow.move?.transitions.find(
+                    (candidate) =>
+                      candidate.fromStateId === progress.stateId &&
+                      candidate.toCellId === selectedCellId,
+                  );
+                  if (transition) {
+                    answer({
+                      type: "CHOOSE_MOVE",
+                      missionIndex,
+                      playerId: transition.playerId,
+                      toCellId: selectedCellId ?? "",
+                      revision,
+                    });
+                  }
+                }}
+                progress={progress}
+              />
+            ) : null}
+            {step === "PASS" ? (
+              <PassPanel
+                mission={mission}
+                boardState={boardState}
+                progress={progress}
+                selectedLaneId={selectedLaneId}
+                onSelectLane={setSelectedLaneId}
+                evidenceKeys={evidenceKeys}
+                onToggleEvidence={setEvidenceKeys}
+                onConfirm={(deferred) =>
+                  answer({
+                    type: "ANSWER_PASS",
+                    missionIndex,
+                    laneId: deferred
+                      ? (selectedLaneId ?? progress.pass?.laneId ?? "")
+                      : (selectedLaneId ?? ""),
+                    evidenceKeys,
+                    blockerPlayerId: selectedPlayerId,
+                    deferred,
+                    revision,
+                  })
+                }
+              />
+            ) : null}
+            {step === "REVEAL" ? (
+              <RevealPanel
+                mission={mission}
+                boardState={boardState}
+                progress={progress}
+                revealChoice={revealChoice}
+                onSelectChoice={setRevealChoice}
+                selectedLaneId={selectedLaneId}
+                onSelectLane={setSelectedLaneId}
+                onConfirm={() =>
+                  answer({
+                    type: "ANSWER_REVEAL",
+                    missionIndex,
+                    keptPlan: revealChoice === "keep",
+                    revisedLaneId: revealChoice === "revise" ? selectedLaneId : null,
+                    revision,
+                  })
+                }
+              />
+            ) : null}
+            {step === "SUPPORT" ? (
+              <SupportPanel
+                mission={mission}
+                stateId={progress.stateId}
+                progress={progress}
+                selectedCellId={selectedCellId}
+                onSelectCell={setSelectedCellId}
+                evidenceKeys={evidenceKeys}
+                onToggleEvidence={setEvidenceKeys}
+                onConfirm={() => {
+                  const transition = mission.flow.support?.transitions.find(
+                    (candidate) =>
+                      candidate.fromStateId === progress.stateId &&
+                      candidate.toCellId === selectedCellId,
+                  );
+                  if (transition) {
+                    answer({
+                      type: "ANSWER_SUPPORT",
+                      missionIndex,
+                      playerId: transition.playerId,
+                      toCellId: selectedCellId ?? "",
+                      evidenceKeys,
+                      revision,
+                    });
+                  }
+                }}
+              />
+            ) : null}
+          </div>
 
           <div className="workbench__actions">
             <ActionButton onClick={() => answer({ type: "BACK" })}>뒤로</ActionButton>
             <ActionButton
               variant="primary"
+              className="workbench__next"
               disabled={!stepAnswered}
               onClick={() => answer({ type: "NEXT" })}
             >

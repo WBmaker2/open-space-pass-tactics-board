@@ -30,18 +30,30 @@ export function ProgressSteps({
   missionNumber,
   totalMissions,
 }: ProgressStepsProps) {
+  const currentIndex = steps.indexOf(currentStep);
+
   return (
     <nav aria-label="학습 진행" className="progress-steps">
-      <p className="progress-steps__mission">
-        미션 {missionNumber}/{totalMissions} · {missionTitle}
-      </p>
+      <div className="progress-steps__heading">
+        <p className="progress-steps__mission">
+          미션 {missionNumber}/{totalMissions}
+        </p>
+        <p className="progress-steps__title">{missionTitle}</p>
+      </div>
       <ol className="progress-steps__list">
-        {steps.map((step) => (
+        {steps.map((step, index) => (
           <li
             key={step}
-            className={step === currentStep ? "progress-steps__item is-current" : "progress-steps__item"}
+            className={[
+              "progress-steps__item",
+              step === currentStep ? "is-current" : "",
+              index < currentIndex ? "is-complete" : "",
+            ]
+              .filter(Boolean)
+              .join(" ")}
             aria-current={step === currentStep ? "step" : undefined}
           >
+            <span className="progress-steps__dot" aria-hidden="true" />
             {stepLabel(step)}
           </li>
         ))}

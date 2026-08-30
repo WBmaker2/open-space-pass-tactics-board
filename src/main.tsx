@@ -5,6 +5,8 @@ import "./styles/tokens.css";
 import "./styles/app.css";
 import "./styles/board.css";
 import "./styles/motion.css";
+import "./styles/overlays.css";
+import "./styles/progress.css";
 
 const container = document.getElementById("root");
 if (!container) throw new Error("root 엘리먼트를 찾을 수 없다");

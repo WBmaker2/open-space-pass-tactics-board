@@ -1,0 +1,82 @@
+/* 미션 순서를 한 눈에 읽는 진행 표시. */
+.progress-steps {
+  margin: var(--space-5) 0 var(--space-4);
+  padding: var(--space-3) 0 var(--space-4);
+  border-top: 1px solid var(--color-board-line);
+  border-bottom: 1px solid var(--color-board-line);
+}
+
+.progress-steps__heading {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.progress-steps__mission,
+.progress-steps__title {
+  margin: 0;
+}
+
+.progress-steps__mission {
+  color: var(--color-defense);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.progress-steps__title {
+  color: var(--color-ink-soft);
+  font-weight: 700;
+}
+
+.progress-steps__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.progress-steps__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-board-line);
+  border-radius: var(--radius-control);
+  color: var(--color-ink-soft);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.progress-steps__dot {
+  width: 9px;
+  height: 9px;
+  flex: 0 0 auto;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+}
+
+.progress-steps__item.is-complete {
+  border-color: var(--color-open);
+  color: var(--color-open);
+}
+
+.progress-steps__item.is-complete .progress-steps__dot {
+  background: var(--color-open);
+}
+
+.progress-steps__item.is-current {
+  border-color: var(--color-attack);
+  background: var(--color-attack-soft);
+  color: var(--color-attack);
+}
+
+@media (max-width: 479px) {
+  .progress-steps__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

@@ -25,10 +25,14 @@ export function App() {
   return (
     <ErrorBoundary>
       <div className="app">
+        <a className="skip-link" href="#main-content">
+          본문으로 건너뛰기
+        </a>
         <header className="app-header">
-          <p className="app-header__title" aria-hidden="true">
-            빈 공간 패스 전술판
-          </p>
+          <div className="app-header__brand">
+            <span className="app-header__mark" aria-hidden="true" />
+            <p className="app-header__title">빈 공간 패스 전술판</p>
+          </div>
           <div className="app-header__tools">
             <AccessibilityToolbar />
             {inSession ? (
@@ -44,7 +48,7 @@ export function App() {
           </div>
         </header>
 
-        <main className="app-main">
+        <main id="main-content" className="app-main">
           {state.step === "INTRO" ? (
             <EntranceScreen
               onStart={() => dispatch({ type: "START" })}

@@ -5,6 +5,7 @@ import { missions } from "../../content/missions";
 import { cellId as cellIdOf } from "../../domain/grid";
 import type { PassLane, PassMissionRecord, TacticsState } from "../../domain/types";
 import { TacticsBoard } from "../pass-tactics/TacticsBoard";
+import "./report.css";
 import "./print.css";
 
 interface LearningReportProps {
@@ -15,23 +16,37 @@ interface LearningReportProps {
 export function LearningReport({ session, headingRef }: LearningReportProps) {
   return (
     <section className="report" aria-labelledby="report-heading">
-      <h1 id="report-heading" ref={headingRef} tabIndex={-1}>
-        전술 기록
-      </h1>
-      <p className="report__lead">점수나 순위는 없어요. 여러분의 생각을 기록했어요.</p>
-      <p className="report__notice">
-        이 기록은 이 탭에만 있어요. 새로고침하면 사라져요. 남기고 싶으면 인쇄하세요.
-      </p>
+      <div className="report__intro">
+        <h1 id="report-heading" ref={headingRef} tabIndex={-1}>
+          전술 기록
+        </h1>
+        <p className="report__lead">점수나 순위는 없어요. 여러분의 생각을 기록했어요.</p>
+        <p className="report__notice">
+          이 기록은 이 탭에만 있어요. 새로고침하면 사라져요. 남기고 싶으면 인쇄하세요.
+        </p>
+      </div>
 
-      {missions.map((mission, index) => (
-        <MissionReportCard
-          key={mission.id}
-          mission={mission}
-          progress={session.missions[index]}
-        />
-      ))}
+      <div className="report__section-heading">
+        <h2>미션별 작전 기록</h2>
+        <p>처음 생각과 판을 다시 보며, 어떤 근거를 사용했는지 살펴보세요.</p>
+      </div>
+
+      <div className="report__cards">
+        {missions.map((mission, index) => (
+          <MissionReportCard
+            key={mission.id}
+            mission={mission}
+            progress={session.missions[index]}
+            missionNumber={index + 1}
+          />
+        ))}
+      </div>
 
       <div className="report__actions">
+        <div>
+          <h2>이 기록을 남겨 볼까요?</h2>
+          <p>필요하면 종이에 인쇄해서 선생님과 이야기할 수 있어요.</p>
+        </div>
         <ActionButton variant="primary" onClick={() => window.print()}>
           기록 인쇄하기
         </ActionButton>
@@ -46,9 +61,10 @@ export function LearningReport({ session, headingRef }: LearningReportProps) {
 interface MissionReportCardProps {
   readonly mission: PassMissionRecord;
   readonly progress: MissionProgress;
+  readonly missionNumber: number;
 }
 
-function MissionReportCard({ mission, progress }: MissionReportCardProps) {
+function MissionReportCard({ mission, progress, missionNumber }: MissionReportCardProps) {
   const firstState =
     mission.states.find((candidate) => candidate.id === mission.flow.firstStateId) ??
     mission.states[0];
@@ -57,7 +73,12 @@ function MissionReportCard({ mission, progress }: MissionReportCardProps) {
 
   return (
     <section className="report__card" aria-label={mission.flow.title}>
-      <h2>{mission.flow.title}</h2>
+      <header className="report__card-heading">
+        <span className="report__card-number" aria-hidden="true">
+          {String(missionNumber).padStart(2, "0")}
+        </span>
+        <h3>{mission.flow.title}</h3>
+      </header>
       <div className="report__boards">
         <div className="report__board">
           <p className="report__board-title">시작 판</p>

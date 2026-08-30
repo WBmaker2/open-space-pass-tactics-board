@@ -189,6 +189,14 @@ function TargetCell({ cellId, selected, onSelect }: TargetCellProps) {
       }}
     >
       <rect
+        x={x - 16}
+        y={y - 16}
+        width={CELL + 32}
+        height={CELL + 32}
+        className="target-cell__hit-area"
+        aria-hidden="true"
+      />
+      <rect
         x={x + 5}
         y={y + 5}
         width={CELL - 10}
@@ -266,6 +274,7 @@ function PlayerTokenShape({ player, selectable, selected, onSelect }: PlayerToke
         }
       }}
     >
+      <circle cx={x} cy={y} r={48} className="token-hit-area" aria-hidden="true" />
       {inner}
     </g>
   );
