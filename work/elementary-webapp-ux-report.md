@@ -3,11 +3,20 @@
 - 보고일: 2026-08-31
 - 대상: `빈 공간 패스 전술판`
 - 실행 모드: `elementary-webapp-ux-orchestrator` full
-- 공개 릴리스: 이번 요청에서는 수행하지 않음
+- 공개 릴리스: 2026-08-31 완료 (`3339324055e448b79c66f2ca1a82fd9a7814bc1a`)
 
 ## 결과 요약
 
 실제 브라우저 학습 흐름을 다시 점검하고, 확인된 P1 3건과 P2 표현·완료 단서 문제를 수정했다. 첫 화면에서 시작할 수 있고, 오답 피드백 뒤 다음 행동이 보이며, 이동·지원 근거가 사라지지 않고, 완료 화면에서 배운 관찰 기준을 말해 볼 수 있다.
+
+## 릴리스 결과
+
+- 커밋: [`3339324055e448b79c66f2ca1a82fd9a7814bc1a`](https://github.com/WBmaker2/open-space-pass-tactics-board/commit/3339324055e448b79c66f2ca1a82fd9a7814bc1a)
+- 푸시: `main` 반영 완료
+- CI: [run 33358140545](https://github.com/WBmaker2/open-space-pass-tactics-board/actions/runs/33358140545) — `npm run verify` 전체 통과
+- 배포: [Deploy Pages run 33358140589](https://github.com/WBmaker2/open-space-pass-tactics-board/actions/runs/33358140589) 성공
+- HVC 확인 주소: [https://wbmaker2.github.io/open-space-pass-tactics-board/](https://wbmaker2.github.io/open-space-pass-tactics-board/)
+- 공개 검증: HTML/favicon/해시 JS·CSS/WebP HTTP 200, 공개 브라우저에서 6개 미션 완료 후 `전술 기록`, 콘솔 오류 0건, 비정적 요청 0건, 320px 가로 넘침 없음
 
 ## 반영한 개선
 
@@ -38,6 +47,7 @@
 - 관찰 오답: `방금 고른 선수는 공을 가지고 있지 않아요.`와 `다음 단계로` 표시.
 - 예측 오답 320px: 피드백과 `다음 단계로`가 같은 뷰포트에서 표시.
 - 전체 흐름 375px: `전술 기록`, 카드 6개, 미션 3/5/6 근거 라벨, takeaway, 가로 넘침 없음.
+- 공개 Pages 흐름: 미션 1 전체 단계와 미션 2~6을 완료해 `전술 기록`에 도달하고, 320px에서 시작 CTA·가로 폭을 확인함.
 - 브라우저 콘솔: 오류 0건. 비정적 네트워크 요청 0건.
 
 ## 자동 검증
@@ -50,7 +60,7 @@
 - `npm run check:lines` 통과 — TS/TSX/CSS 500줄 미만
 - `npm run build` 통과
 - `npm run test:e2e` 통과 — 12 tests
-- `npm run verify`는 lint/typecheck/unit/a11y/line-count/build/release까지 통과했으나, 마지막 E2E webServer가 다른 프로젝트(`production-distribution-trace-center`)의 `127.0.0.1:4173` 점유로 시작하지 못했다. 동일 변경에 대해 별도로 실행한 `npm run test:e2e`는 12 tests 모두 통과했다.
+- `npm run verify`는 [GitHub Actions CI run 33358140545](https://github.com/WBmaker2/open-space-pass-tactics-board/actions/runs/33358140545)에서 lint/typecheck/unit/a11y/line-count/build/release/E2E까지 전체 통과했다. 로컬 통합 실행에서만 다른 프로젝트(`production-distribution-trace-center`)의 `127.0.0.1:4173` 점유가 있었고, 포트를 점유한 프로세스는 종료하지 않았다.
 - Impeccable detector는 한 번 실행했으며 첫 takeaway 스타일의 side-tab 경고를 확인한 뒤 전체 테두리 스타일로 조정했다. 추가 자동 검출은 실행하지 않았다.
 
 ## 남은 사람 검토
@@ -58,7 +68,7 @@
 - 콘텐츠의 `reviewStatus: pending`에 따라 교사·교육과정 담당자가 실제 수업 용어와 여섯 미션의 오개념 방지 문장을 확인해야 한다.
 - 학생의 실제 이해·전이 여부는 simulated learner panel이나 자동 테스트가 대신하지 않는다.
 - VoiceOver, TTS, 음성 재생·녹음은 요청 범위와 프로젝트 규칙에 따라 구현·검증하지 않았다.
-- 현재 작업 트리 변경은 커밋·푸시·배포하지 않았다. 기존 공개 HVC 주소는 아래의 별도 링크로만 제공한다.
+- UX 개선 변경은 커밋·푸시·배포 완료했다. 교사·교육과정 검수와 HVC 관리자 등록은 사람 검수 단계로 남아 있다.
 
 ## 관련 문서
 
@@ -68,3 +78,4 @@
 - `work/elementary-webapp-ux-simulation-decision.md`
 - `work/elementary-webapp-ux-simulation-test.md`
 - `work/elementary-webapp-ux-bootstrap.md`
+- `docs/qa/release-evidence.md`

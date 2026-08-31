@@ -1,8 +1,8 @@
 # 수용 기준 체크리스트 (QA)
 
-> 2026-08-30 리디자인 후 CI의 `npm run verify` 전체 통과 기준으로 갱신. 각 항목은 자동 검증 결과와 사람 확인으로 채운다.
+> 2026-08-31 최신 UX 개선 커밋 후 CI의 `npm run verify` 전체 통과와 GitHub Pages 공개 검증 기준으로 갱신. 각 항목은 자동 검증 결과와 사람 확인으로 채운다.
 
-## 자동 검증 (2026-08-28 전체 통과)
+## 자동 검증 (2026-08-31 릴리스 커밋)
 
 - [x] `npm run lint` 오류 0건
 - [x] `npm run typecheck` 오류 0건
@@ -13,6 +13,8 @@
 - [x] `dist/index.html`과 해시 자산 생성, base `/open-space-pass-tactics-board/` (tests/release)
 - [x] E2E 12건 전부 통과 — 3대1 열린 길+근거, 막은 수비 연결, 복수 유효 패스 두 경로, 6미션 보고서(점수·승패 없음), 콘솔 오류 0건, 키보드 전용 선택, 320·375px 가로 넘침 0, 축소 모션 대체, 재시작 확인 대화상자. CI 재실행에서 flaky 0건
 - [x] `git diff --check` 출력 없음
+- [x] 최신 커밋 [`3339324`](https://github.com/WBmaker2/open-space-pass-tactics-board/commit/3339324055e448b79c66f2ca1a82fd9a7814bc1a)의 [CI run 33358140545](https://github.com/WBmaker2/open-space-pass-tactics-board/actions/runs/33358140545) 성공
+- [x] 최신 [Deploy Pages run 33358140589](https://github.com/WBmaker2/open-space-pass-tactics-board/actions/runs/33358140589) 성공 및 공개 URL 제목·자산·학습 경로 확인
 
 ## 앱별 완료 기준
 
