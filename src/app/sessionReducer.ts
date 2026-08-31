@@ -14,6 +14,7 @@ export interface PredictAnswer {
 export interface MoveAnswer {
   readonly playerId: string;
   readonly toCellId: string;
+  readonly evidenceKeys: readonly string[];
 }
 
 export interface PassAnswer {
@@ -60,7 +61,7 @@ export type SessionAction =
   | { readonly type: "START" }
   | { readonly type: "ANSWER_OBSERVE"; readonly missionIndex: number; readonly playerId: string; readonly revision: number }
   | { readonly type: "ANSWER_PREDICT"; readonly missionIndex: number; readonly laneId: string; readonly evidenceKeys: readonly string[]; readonly revision: number }
-  | { readonly type: "CHOOSE_MOVE"; readonly missionIndex: number; readonly playerId: string; readonly toCellId: string; readonly revision: number }
+  | { readonly type: "CHOOSE_MOVE"; readonly missionIndex: number; readonly playerId: string; readonly toCellId: string; readonly evidenceKeys: readonly string[]; readonly revision: number }
   | { readonly type: "ANSWER_PASS"; readonly missionIndex: number; readonly laneId: string; readonly evidenceKeys: readonly string[]; readonly blockerPlayerId: string | null; readonly deferred: boolean; readonly revision: number }
   | { readonly type: "ANSWER_REVEAL"; readonly missionIndex: number; readonly keptPlan: boolean; readonly revisedLaneId: string | null; readonly revision: number }
   | { readonly type: "ANSWER_SUPPORT"; readonly missionIndex: number; readonly playerId: string; readonly toCellId: string; readonly evidenceKeys: readonly string[]; readonly revision: number }
@@ -175,7 +176,7 @@ function answerAction(state: SessionState, action: SessionAction): SessionState 
         ...progress,
         revision: progress.revision + 1,
         stateId: match.nextStateId,
-        move: { playerId: action.playerId, toCellId: action.toCellId },
+        move: { playerId: action.playerId, toCellId: action.toCellId, evidenceKeys: [...action.evidenceKeys] },
       });
     }
     case "ANSWER_PASS": {

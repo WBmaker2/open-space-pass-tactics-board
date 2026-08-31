@@ -76,11 +76,11 @@ export const passLane01: PassMissionRecord = {
     },
     reveal: {
       defenderId: "D1",
-      prompt: "수비 D1이 한 칸 움직였어요. 처음 계획을 유지할까요, 수정할까요?",
+      prompt: "수비가 한 칸 움직였어요. 처음 계획을 유지할까요, 수정할까요?",
       transitions: [{ fromStateId: "st-01-passed", toCellId: "c4r2", nextStateId: "st-01-reveal" }],
     },
     support: {
-      prompt: "패스를 보낸 A1이 한 칸 움직이면 다음 패스 길이 열려요. 어디로 갈까요?",
+      prompt: "패스를 보낸 선수가 한 칸 움직이면 다음 패스 길이 열려요. 어디로 갈까요?",
       transitions: [
         { fromStateId: "st-01-reveal", playerId: "A1", toCellId: "c2r1", nextStateId: "st-01-support-up" },
         { fromStateId: "st-01-reveal", playerId: "A1", toCellId: "c2r3", nextStateId: "st-01-support-down" },

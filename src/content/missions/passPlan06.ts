@@ -105,7 +105,7 @@ export const passPlan06: PassMissionRecord = {
     firstStateId: "st-06-start",
     observe: { prompt: "공을 가진 사람을 찾아 눌러요.", ballHolderPlayerId: "A1" },
     move: {
-      prompt: "먼저 받을 사람 한 명을 측면 빈 공간으로 옮겨요. 누구를 어디로 옮길까요?",
+      prompt: "먼저 받을 선수 한 명을 측면 빈 공간으로 옮겨요. 누구를 어디로 옮길까요?",
       transitions: [
         { fromStateId: "st-06-start", playerId: "A2", toCellId: "c5r1", nextStateId: "st-06-left" },
         { fromStateId: "st-06-start", playerId: "A3", toCellId: "c5r3", nextStateId: "st-06-right" },
@@ -121,7 +121,7 @@ export const passPlan06: PassMissionRecord = {
       evidenceOptions: [EV_LANE_NO_DEFENDER],
     },
     support: {
-      prompt: "마지막으로 패스를 보낸 A1이 한 칸 움직여 팀의 다음 패스를 도와요. 어디로 갈까요?",
+      prompt: "마지막으로 패스를 보낸 선수가 한 칸 움직여 팀의 다음 패스를 도와요. 어디로 갈까요?",
       transitions: [
         { fromStateId: "st-06-left-passed", playerId: "A1", toCellId: "c2r2", nextStateId: "st-06-left-support" },
         { fromStateId: "st-06-right-passed", playerId: "A1", toCellId: "c2r2", nextStateId: "st-06-right-support" },

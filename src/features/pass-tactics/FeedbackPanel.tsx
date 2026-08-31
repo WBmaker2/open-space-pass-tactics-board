@@ -1,4 +1,5 @@
-import type { PassMissionRecord, TacticsState } from "../../domain/types";
+import type { PassMissionRecord } from "../../domain/types";
+import { cellId as cellIdOf, parseCellId } from "../../domain/grid";
 
 export type FeedbackTone = "good" | "think" | "info";
 
@@ -47,16 +48,14 @@ function sentenceFor(key: string, mission: PassMissionRecord): string | null {
   const fixed = FIXED_SENTENCES[key];
   if (fixed) return fixed;
   if (key.startsWith("blocked-by:")) {
-    const playerId = key.slice("blocked-by:".length);
-    return `${playerId} 선수가 그 길을 막고 있어요.`;
+    return "수비가 그 길을 막고 있어요.";
   }
   if (key.startsWith("lane-opened:")) {
     const laneId = key.slice("lane-opened:".length);
     return `이 움직임으로 ${laneLabelText(mission, laneId)} 길이 다시 열려요.`;
   }
   if (key.startsWith("sequence-match:")) {
-    const sequenceId = key.slice("sequence-match:".length);
-    return `검수된 계획(${sequenceId})과 순서가 같아요. 이동 → 패스 → 지원이 완성됐어요.`;
+    return "이동 → 패스 → 지원 순서가 이어졌어요.";
   }
   return null;
 }
@@ -79,13 +78,21 @@ function laneLabelText(mission: PassMissionRecord, laneId: string): string {
     if (lane) {
       const from = state.players.find((player) => player.id === lane.fromPlayerId);
       const to = state.players.find((player) => player.id === lane.toPlayerId);
-      if (from && to) return `${from.roleLabel} → ${to.roleLabel}`;
+      if (from && to) {
+        return `${positionLabel(cellIdOf(from.cell))} 선수 → ${positionLabel(cellIdOf(to.cell))} 선수`;
+      }
     }
   }
   return laneId;
 }
 
-/** state 안에서 선수 roleLabel을 찾는 유틸(관찰 피드백 등에 사용). */
-export function roleLabelOf(state: TacticsState, playerId: string): string {
-  return state.players.find((player) => player.id === playerId)?.roleLabel ?? playerId;
+function positionLabel(cellId: string): string {
+  const cell = parseCellId(cellId);
+  if (!cell) return "판 위";
+  const horizontal = cell.column <= 1 ? "왼쪽" : cell.column >= 5 ? "오른쪽" : "가운데";
+  const vertical = cell.row <= 1 ? "위" : cell.row >= 3 ? "아래" : "가운데";
+  if (horizontal === "가운데" && vertical === "가운데") return "가운데";
+  if (horizontal === "가운데") return vertical;
+  if (vertical === "가운데") return horizontal;
+  return `${horizontal} ${vertical}`;
 }

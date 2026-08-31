@@ -30,12 +30,18 @@ function answerPredict(state: SessionState, laneId: string): SessionState {
   });
 }
 
-function chooseMove(state: SessionState, playerId: string, toCellId: string): SessionState {
+function chooseMove(
+  state: SessionState,
+  playerId: string,
+  toCellId: string,
+  evidenceKeys: readonly string[] = [],
+): SessionState {
   return sessionReducer(state, {
     type: "CHOOSE_MOVE",
     missionIndex: state.missionIndex,
     playerId,
     toCellId,
+    evidenceKeys,
     revision: progressOf(state).revision,
   });
 }
@@ -211,8 +217,9 @@ describe("학습 단계 진행", () => {
     state = answerPredict(state, "lane-a1-a2");
     state = next(state);
     expect(state.step).toBe("MOVE");
-    state = chooseMove(state, "A2", "c4r1");
+    state = chooseMove(state, "A2", "c4r1", ["ev-move-open-lane"]);
     expect(state.missions[2].stateId).toBe("st-03-up");
+    expect(progressOf(state).move?.evidenceKeys).toEqual(["ev-move-open-lane"]);
     state = next(state);
     expect(state.step).toBe("PASS");
     state = answerPass(state, "lane-a1-a2-up");

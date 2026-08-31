@@ -2,7 +2,7 @@ import { ActionButton } from "../../components/ActionButton";
 import { cellId as cellIdOf, parseCellId } from "../../domain/grid";
 import type { EvidenceOption, PassMissionRecord, TacticsState } from "../../domain/types";
 import type { MissionProgress } from "../../app/sessionReducer";
-import { FeedbackPanel, roleLabelOf, sentencesFromEvidence } from "./FeedbackPanel";
+import { FeedbackPanel, sentencesFromEvidence } from "./FeedbackPanel";
 
 interface PanelSharedProps {
   readonly mission: PassMissionRecord;
@@ -14,11 +14,22 @@ function directionWord(fromCellId: string, toCellId: string): string {
   const to = parseCellId(toCellId);
   if (!from || !to) return "";
   const parts: string[] = [];
-  if (to.row < from.row) parts.push("위");
-  if (to.row > from.row) parts.push("아래");
   if (to.column > from.column) parts.push("오른쪽");
   if (to.column < from.column) parts.push("왼쪽");
-  return `${parts.join(" ")} 한 칸`;
+  if (to.row < from.row) parts.push("위");
+  if (to.row > from.row) parts.push("아래");
+  return parts.length > 0 ? `${parts.join(" ")} 한 칸` : "한 칸";
+}
+
+function positionLabel(cellId: string): string {
+  const cell = parseCellId(cellId);
+  if (!cell) return "판 위";
+  const horizontal = cell.column <= 1 ? "왼쪽" : cell.column >= 5 ? "오른쪽" : "가운데";
+  const vertical = cell.row <= 1 ? "위" : cell.row >= 3 ? "아래" : "가운데";
+  if (horizontal === "가운데" && vertical === "가운데") return "가운데";
+  if (horizontal === "가운데") return vertical;
+  if (vertical === "가운데") return horizontal;
+  return `${horizontal} ${vertical}`;
 }
 
 function laneChoiceLabel(state: TacticsState, laneId: string): string {
@@ -27,7 +38,7 @@ function laneChoiceLabel(state: TacticsState, laneId: string): string {
   const from = state.players.find((player) => player.id === lane.fromPlayerId);
   const to = state.players.find((player) => player.id === lane.toPlayerId);
   if (!from || !to) return laneId;
-  return `${from.roleLabel} → ${to.roleLabel}`;
+  return `${positionLabel(cellIdOf(from.cell))} 선수 → ${positionLabel(cellIdOf(to.cell))} 선수`;
 }
 
 export function EvidenceChips({
@@ -75,14 +86,14 @@ export function ObservePanel({ boardState, progress }: ObserveProps) {
     <FeedbackPanel
       tone="good"
       heading="잘 찾았어요!"
-      sentences={[`공을 가진 사람은 ${roleLabelOf(boardState, holder?.id ?? "")}예요.`]}
+      sentences={["공을 가진 선수를 찾았어요."]}
     />
   ) : (
     <FeedbackPanel
       tone="think"
       heading="다시 볼까요?"
       sentences={[
-        `${roleLabelOf(boardState, progress.observePlayerId ?? "")}은(는) 공을 가지고 있지 않아요. 공 아이콘이 붙은 선수를 눌러요.`,
+        "방금 고른 선수는 공을 가지고 있지 않아요. 공 아이콘이 붙은 선수를 눌러요.",
       ]}
       showModelNote
     />
@@ -165,10 +176,21 @@ type MoveProps = PanelSharedProps & {
   readonly stateId: string;
   readonly selectedCellId: string | null;
   readonly onSelectCell: (cellId: string | null) => void;
+  readonly evidenceKeys: readonly string[];
+  readonly onToggleEvidence: (keys: readonly string[]) => void;
   readonly onConfirm: () => void;
 };
 
-export function MovePanel({ mission, stateId, selectedCellId, onSelectCell, onConfirm, progress }: MoveProps) {
+export function MovePanel({
+  mission,
+  stateId,
+  selectedCellId,
+  onSelectCell,
+  evidenceKeys,
+  onToggleEvidence,
+  onConfirm,
+  progress,
+}: MoveProps) {
   const options = (mission.flow.move?.transitions ?? []).filter(
     (transition) => transition.fromStateId === stateId,
   );
@@ -193,11 +215,16 @@ export function MovePanel({ mission, stateId, selectedCellId, onSelectCell, onCo
                 checked={selectedCellId === transition.toCellId}
                 onChange={() => onSelectCell(transition.toCellId)}
               />
-              {transition.playerId} → {transition.toCellId} ({direction})
+              {positionLabel(mover ? cellIdOf(mover.cell) : "")}에 있는 선수 → {direction} 옮기기
             </label>
           );
         })}
       </fieldset>
+      <EvidenceChips
+        options={mission.flow.move?.evidenceOptions ?? []}
+        selected={evidenceKeys}
+        onToggle={onToggleEvidence}
+      />
       <ActionButton variant="primary" disabled={selectedCellId === null} onClick={onConfirm}>
         이동해 보기
       </ActionButton>
@@ -435,7 +462,7 @@ export function SupportPanel({
                 checked={selectedCellId === transition.toCellId}
                 onChange={() => onSelectCell(transition.toCellId)}
               />
-              {transition.playerId} → {transition.toCellId} ({direction})
+              {positionLabel(mover ? cellIdOf(mover.cell) : "")}에 있는 선수 → {direction} 옮기기
             </label>
           );
         })}

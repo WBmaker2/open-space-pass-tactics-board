@@ -316,6 +316,7 @@
   margin-top: var(--space-5);
   padding-top: var(--space-4);
   border-top: 1px solid var(--color-board-line);
+  scroll-margin-block: var(--space-5);
 }
 
 .workbench__panel > .workbench__actions .workbench__next {

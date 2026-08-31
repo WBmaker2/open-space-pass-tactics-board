@@ -5,6 +5,7 @@ export interface UpdateHistoryEntry {
 
 /** 최신 항목이 앞에 온다. 실제 수정 때마다 최신 날짜를 앞에 추가한다. */
 export const updateHistory: readonly UpdateHistoryEntry[] = [
+  { date: "2026-08-31", note: "학습자 점검으로 첫 행동·근거 기록·완료 회고를 보강" },
   { date: "2026-08-30", note: "전술판 중심의 학습 흐름과 반응형 작업 화면 리디자인" },
   { date: "2026-08-28", note: "구현 계획 확정" },
 ];

@@ -143,6 +143,26 @@
   font-size: 0.875rem;
 }
 
+.report__takeaway {
+  margin-top: var(--space-7);
+  padding: var(--space-5);
+  border: 1px solid var(--color-attack);
+  border-top-width: 3px;
+  border-radius: var(--radius-small);
+  background: var(--color-attack-soft);
+}
+
+.report__takeaway h2 {
+  margin-bottom: var(--space-1);
+  font-size: 1.35rem;
+}
+
+.report__takeaway p {
+  max-width: 70ch;
+  margin: 0;
+  color: var(--color-ink-soft);
+}
+
 @media (max-width: 767px) {
   .report__section-heading {
     flex-direction: column;

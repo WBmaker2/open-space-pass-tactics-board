@@ -13,7 +13,7 @@ test("3대1 안내 미션에서 열린 길을 고르고 근거를 함께 남긴�
   await page.getByRole("button", { name: /선수 A1/ }).click();
   await clickNext(page);
 
-  await page.getByRole("radio", { name: /A1 → A2/ }).click();
+  await page.getByRole("radio", { name: /왼쪽 선수 → 오른쪽 위 선수/ }).click();
   await page.getByRole("checkbox", { name: "고른 길 사이에 수비가 없어요" }).check();
   await page.getByRole("button", { name: "생각 확인하기" }).click();
 
@@ -28,27 +28,27 @@ test("중앙 길이 막힌 장면에서 막은 수비를 정확히 연결한다"
   // 미션 1 통과
   await page.getByRole("button", { name: /선수 A1/ }).click();
   await clickNext(page);
-  await page.getByRole("radio", { name: /A1 → A2/ }).first().click();
+  await page.getByRole("radio", { name: /왼쪽 선수 → 오른쪽 위 선수/ }).first().click();
   await page.getByRole("button", { name: "생각 확인하기" }).click();
   await clickNext(page);
-  await page.getByRole("radio", { name: /A1 → A2/ }).first().click();
+  await page.getByRole("radio", { name: /왼쪽 선수 → 오른쪽 위 선수/ }).first().click();
   await page.getByRole("button", { name: "패스 길 확인" }).click();
   await clickNext(page);
   await page.getByRole("radio", { name: "계획을 유지할래요" }).click();
   await page.getByRole("button", { name: "계획 정하기" }).click();
   await clickNext(page);
-  await page.getByRole("radio", { name: /A1 → c2r1/ }).click();
+  await page.getByRole("radio", { name: /왼쪽에 있는 선수 → 오른쪽 위 한 칸 옮기기/ }).click();
   await page.getByRole("button", { name: "다음 지원 시험" }).click();
   await clickNext(page);
 
   // 미션 2: 중앙은 막혀 있고 측면만 열려 있다
   await page.getByRole("button", { name: /선수 A1/ }).click();
   await clickNext(page);
-  await page.getByRole("radio", { name: /A1 → A3/ }).click();
+  await page.getByRole("radio", { name: /왼쪽 선수 → 오른쪽 위 선수/ }).click();
   await page.getByRole("button", { name: "생각 확인하기" }).click();
   await clickNext(page);
 
-  await page.getByRole("radio", { name: /A1 → A3/ }).click();
+  await page.getByRole("radio", { name: /왼쪽 선수 → 오른쪽 위 선수/ }).click();
   await page.getByRole("button", { name: /수비 D1/ }).click();
   await page.getByRole("button", { name: "패스 길 확인" }).click();
 
@@ -57,7 +57,7 @@ test("중앙 길이 막힌 장면에서 막은 수비를 정확히 연결한다"
 });
 
 test("복수 유효 패스 미션을 두 경로로 각각 완료한다", async ({ page }) => {
-  for (const lane of ["A1 → A2", "A1 → A3"]) {
+  for (const lane of ["왼쪽 선수 → 오른쪽 위 선수", "왼쪽 선수 → 오른쪽 아래 선수"]) {
     await startLearning(page);
     await completeAllMissions(page, { twoOptionsLane: lane });
     const body = await page.locator("body").textContent();
@@ -74,6 +74,8 @@ test("여섯 미션 뒤 보고서에 승패·점수 없이 공간 근거가 표�
   expect(await page.getByText("사용한 근거", { exact: true }).count()).toBe(6);
   expect(await page.getByText("처음 생각", { exact: true }).count()).toBe(6);
   expect(await page.getByText("수정 결과", { exact: true }).count()).toBe(6);
+  await expect(page.getByText("움직이면 막힌 길이 다시 열려요", { exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "다음에는 이렇게 말해 보세요" })).toBeVisible();
 });
 
 test("학습 흐름 동안 콘솔 오류가 0건이다", async ({ page }) => {

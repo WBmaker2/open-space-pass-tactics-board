@@ -21,6 +21,7 @@ async function completeAllMissions(user: User) {
         await user.click(screen.getByRole("button", { name: "생각 확인하기" }));
       } else if (step === "MOVE") {
         await user.click(screen.getAllByRole("radio", { name: /→/ })[0]);
+        await user.click(screen.getAllByRole("checkbox")[0]);
         await user.click(screen.getByRole("button", { name: "이동해 보기" }));
       } else if (step === "PASS") {
         await passWithAnyOpenLane(user);
@@ -29,6 +30,7 @@ async function completeAllMissions(user: User) {
         await user.click(screen.getByRole("button", { name: "계획 정하기" }));
       } else if (step === "SUPPORT") {
         await user.click(screen.getAllByRole("radio", { name: /→/ })[0]);
+        await user.click(screen.getAllByRole("checkbox")[0]);
         await user.click(screen.getByRole("button", { name: "다음 지원 시험" }));
       }
       await user.click(screen.getByRole("button", { name: "다음 단계로" }));
@@ -63,6 +65,8 @@ it("여섯 미션을 끝내면 점수 없이 미션별 기록을 보여 준다",
   expect(screen.getAllByText("처음 생각").length).toBe(missions.length);
   expect(screen.getAllByText("사용한 근거").length).toBe(missions.length);
   expect(screen.getAllByText("수정 결과").length).toBe(missions.length);
+  expect(screen.getByText("움직이면 막힌 길이 다시 열려요")).toBeInTheDocument();
+  expect(screen.getByRole("heading", { name: "다음에는 이렇게 말해 보세요" })).toBeInTheDocument();
   expect(screen.queryByLabelText(/이름/)).not.toBeInTheDocument();
   expect(screen.getByText(/새로고침하면/)).toBeInTheDocument();
 });

@@ -96,14 +96,14 @@ export const passTwoOptions04: PassMissionRecord = {
     },
     reveal: {
       defenderId: "D1",
-      prompt: "수비 D1이 움직였어요. 계획을 유지할까요, 수정할까요?",
+      prompt: "수비가 움직였어요. 계획을 유지할까요, 수정할까요?",
       transitions: [
         { fromStateId: "st-04-left-passed", toCellId: "c4r1", nextStateId: "st-04-reveal-left" },
         { fromStateId: "st-04-right-passed", toCellId: "c4r3", nextStateId: "st-04-reveal-right" },
       ],
     },
     support: {
-      prompt: "패스를 보낸 A1이 한 칸 움직이면 다음 패스 길이 열려요. 어디로 갈까요?",
+      prompt: "패스를 보낸 선수가 한 칸 움직이면 다음 패스 길이 열려요. 어디로 갈까요?",
       transitions: [
         { fromStateId: "st-04-reveal-left", playerId: "A1", toCellId: "c2r1", nextStateId: "st-04-support-l-up" },
         { fromStateId: "st-04-reveal-left", playerId: "A1", toCellId: "c2r3", nextStateId: "st-04-support-l-down" },

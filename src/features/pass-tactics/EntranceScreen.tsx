@@ -31,6 +31,11 @@ export function EntranceScreen({ onStart, headingRef }: EntranceScreenProps) {
               <dd>15~25분</dd>
             </div>
           </dl>
+          <div className="entrance__hero-actions">
+            <ActionButton variant="primary" className="entrance__start" pulse onClick={onStart}>
+              학습 시작하기
+            </ActionButton>
+          </div>
         </div>
         <figure className="entrance__visual">
           <img src={entranceArt} alt="" className="entrance__art" aria-hidden="true" />
@@ -67,9 +72,6 @@ export function EntranceScreen({ onStart, headingRef }: EntranceScreenProps) {
       </aside>
 
       <div className="entrance__actions">
-        <ActionButton variant="primary" className="entrance__start" onClick={onStart}>
-          학습 시작하기
-        </ActionButton>
         <UpdateHistoryButton />
       </div>
     </section>

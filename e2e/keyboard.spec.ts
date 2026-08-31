@@ -15,7 +15,7 @@ test("키보드만으로 선수·격자 칸·패스 길을 선택한다", async 
   await page.keyboard.press("Enter");
 
   // 예측: 라디오에 스페이스로 선택, 확인 버튼을 Enter로 실행
-  const laneRadio = page.getByRole("radio", { name: /A1 → A2/ });
+  const laneRadio = page.getByRole("radio", { name: /왼쪽 선수 → 오른쪽 위 선수/ });
   await pressTabUntil(page, laneRadio);
   await page.keyboard.press("Space");
   await expect(laneRadio).toBeChecked();
@@ -34,7 +34,7 @@ test("키보드만으로 선수·격자 칸·패스 길을 선택한다", async 
   await page.keyboard.press("Enter");
 
   // 패스: 라디오 선택 뒤 필수 확인 버튼을 Enter로 실행
-  const passRadio = page.getByRole("radio", { name: /A1 → A2/ });
+  const passRadio = page.getByRole("radio", { name: /왼쪽 선수 → 오른쪽 위 선수/ });
   await pressTabUntil(page, passRadio);
   await page.keyboard.press("Space");
 
@@ -45,7 +45,7 @@ test("키보드만으로 선수·격자 칸·패스 길을 선택한다", async 
 
   await pressTabUntil(page, nextButton);
   await page.keyboard.press("Enter");
-  await expect(page.getByText(/수비 D1이 .* 칸으로 움직였어요/)).toBeVisible();
+  await expect(page.getByText(/수비가 한 칸 움직였어요/)).toBeVisible();
 });
 
 test("뒤로 가기는 키보드로도 도달할 수 있다", async ({ page }) => {

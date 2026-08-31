@@ -40,7 +40,7 @@ export const passAfter05: PassMissionRecord = {
     "패스를 한 뒤에도 멈추지 않아요. 다음 길을 열어 주는 자리로 움직여요.",
   flow: {
     title: "미션 5 · 패스 뒤 지원 위치",
-    intro: "패스가 끝난 뒤가 중요해요. 공을 보낸 A1의 다음 움직임을 찾아요.",
+    intro: "패스가 끝난 뒤가 중요해요. 공을 보낸 선수의 다음 움직임을 찾아요.",
     steps: ["OBSERVE", "SUPPORT"],
     firstStateId: "st-05-start",
     observe: {
@@ -48,7 +48,7 @@ export const passAfter05: PassMissionRecord = {
       ballHolderPlayerId: "A2",
     },
     support: {
-      prompt: "공을 보낸 A1이 한 칸 움직이면 다음 패스 길이 열려요. 어디로 갈까요?",
+      prompt: "공을 보낸 선수가 한 칸 움직이면 다음 패스 길이 열려요. 어디로 갈까요?",
       transitions: [
         { fromStateId: "st-05-start", playerId: "A1", toCellId: "c2r1", nextStateId: "st-05-support-up" },
         { fromStateId: "st-05-start", playerId: "A1", toCellId: "c2r3", nextStateId: "st-05-support-down" },

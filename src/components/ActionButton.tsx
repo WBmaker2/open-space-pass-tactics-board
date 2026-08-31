@@ -2,7 +2,7 @@ import type { ButtonHTMLAttributes, ReactNode } from "react";
 
 interface ActionButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   readonly variant?: "primary" | "secondary";
-  /** 필수 다음 행동 두 개(패스 길 확인·다음 지원 시험)에만 사용하는 맥박 강조. */
+  /** 지금 꼭 눌러야 하는 학습 흐름의 다음 행동을 맥박으로 강조한다. */
   readonly pulse?: boolean;
   readonly children: ReactNode;
 }

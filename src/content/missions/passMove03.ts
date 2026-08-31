@@ -64,11 +64,11 @@ export const passMove03: PassMissionRecord = {
     observe: { prompt: "공을 가진 사람을 찾아 눌러요.", ballHolderPlayerId: "A1" },
     predict: {
       stateId: "st-03-start",
-      prompt: "지금 바로 A1이 A2에게 패스할 수 있을까요? 길을 골라 확인해요.",
+      prompt: "지금 바로 패스할 수 있을까요? 길을 골라 확인해요.",
       evidenceOptions: [EV_LANE_NO_DEFENDER, EV_MOVE_OPEN_LANE],
     },
     move: {
-      prompt: "받을 사람 A2를 어디로 옮기면 길이 다시 열릴까요? 한 칸만 움직일 수 있어요.",
+      prompt: "받을 선수를 어디로 옮기면 길이 다시 열릴까요? 한 칸만 움직일 수 있어요.",
       transitions: [
         { fromStateId: "st-03-start", playerId: "A2", toCellId: "c4r1", nextStateId: "st-03-up" },
         { fromStateId: "st-03-start", playerId: "A2", toCellId: "c4r3", nextStateId: "st-03-down" },
@@ -85,7 +85,7 @@ export const passMove03: PassMissionRecord = {
     },
     reveal: {
       defenderId: "D1",
-      prompt: "수비 D1이 따라와요. 계획을 유지할까요, 수정할까요?",
+      prompt: "수비가 따라와요. 계획을 유지할까요, 수정할까요?",
       transitions: [
         { fromStateId: "st-03-up-passed", toCellId: "c3r1", nextStateId: "st-03-up-reveal" },
         { fromStateId: "st-03-down-passed", toCellId: "c3r3", nextStateId: "st-03-down-reveal" },

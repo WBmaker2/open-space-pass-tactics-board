@@ -1,4 +1,4 @@
-import { useEffect, useState, type RefObject } from "react";
+import { useEffect, useRef, useState, type RefObject } from "react";
 import type { SessionAction, SessionState } from "../../app/sessionReducer";
 import { ActionButton } from "../../components/ActionButton";
 import { ProgressSteps, stepLabel } from "../../components/ProgressSteps";
@@ -31,6 +31,7 @@ export function TacticsWorkbench({ session, dispatch, headingRef }: TacticsWorkb
   const [selectedCellId, setSelectedCellId] = useState<string | null>(null);
   const [evidenceKeys, setEvidenceKeys] = useState<readonly string[]>([]);
   const [revealChoice, setRevealChoice] = useState<"keep" | "revise" | null>(null);
+  const actionsRef = useRef<HTMLDivElement>(null);
 
   // 단계·미션이 바뀌면 선택 상태를 새로 시작한다.
   useEffect(() => {
@@ -67,6 +68,12 @@ export function TacticsWorkbench({ session, dispatch, headingRef }: TacticsWorkb
     (step === "PASS" && passAnswered) ||
     (step === "REVEAL" && revealAnswered) ||
     (step === "SUPPORT" && supportAnswered);
+
+  // 답변 뒤 피드백이 길어져도 학습자가 바로 다음 행동을 찾을 수 있게 한다.
+  useEffect(() => {
+    if (!stepAnswered) return;
+    actionsRef.current?.scrollIntoView({ block: "nearest", behavior: "auto" });
+  }, [progress.revision, stepAnswered]);
 
   const revision = progress.revision;
 
@@ -112,7 +119,7 @@ export function TacticsWorkbench({ session, dispatch, headingRef }: TacticsWorkb
             <li>동그라미 + A = 공격 선수</li>
             <li>세모 + D = 수비 선수</li>
             <li>흰 공 = 지금 공을 가진 사람</li>
-            <li>칸 이름은 c열r행 (왼쪽 위가 c0r0)</li>
+            <li>판의 위·아래와 왼쪽·오른쪽을 살펴봐요</li>
           </ul>
         </section>
 
@@ -151,6 +158,8 @@ export function TacticsWorkbench({ session, dispatch, headingRef }: TacticsWorkb
                 stateId={progress.stateId}
                 selectedCellId={selectedCellId}
                 onSelectCell={setSelectedCellId}
+                evidenceKeys={evidenceKeys}
+                onToggleEvidence={setEvidenceKeys}
                 onConfirm={() => {
                   const transition = mission.flow.move?.transitions.find(
                     (candidate) =>
@@ -163,6 +172,7 @@ export function TacticsWorkbench({ session, dispatch, headingRef }: TacticsWorkb
                       missionIndex,
                       playerId: transition.playerId,
                       toCellId: selectedCellId ?? "",
+                      evidenceKeys,
                       revision,
                     });
                   }
@@ -244,7 +254,7 @@ export function TacticsWorkbench({ session, dispatch, headingRef }: TacticsWorkb
             ) : null}
           </div>
 
-          <div className="workbench__actions">
+          <div ref={actionsRef} className="workbench__actions">
             <ActionButton onClick={() => answer({ type: "BACK" })}>뒤로</ActionButton>
             <ActionButton
               variant="primary"

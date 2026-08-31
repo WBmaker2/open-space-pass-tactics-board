@@ -58,6 +58,7 @@ export async function completeAllMissions(
         await page.getByRole("button", { name: "생각 확인하기" }).click();
       } else if (step === "MOVE") {
         await page.getByRole("radio", { name: /→/ }).first().click();
+        await page.getByRole("checkbox").first().click();
         await page.getByRole("button", { name: "이동해 보기" }).click();
       } else if (step === "PASS") {
         if (mission.id === "pass-two-options-04" && options.twoOptionsLane) {
@@ -71,6 +72,7 @@ export async function completeAllMissions(
         await page.getByRole("button", { name: "계획 정하기" }).click();
       } else if (step === "SUPPORT") {
         await page.getByRole("radio", { name: /→/ }).first().click();
+        await page.getByRole("checkbox").first().click();
         await page.getByRole("button", { name: "다음 지원 시험" }).click();
       }
       await clickNext(page);

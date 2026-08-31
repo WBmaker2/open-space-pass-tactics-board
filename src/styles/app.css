@@ -261,6 +261,10 @@ p {
   font-weight: 800;
 }
 
+.entrance__hero-actions {
+  margin-top: var(--space-5);
+}
+
 .entrance__visual {
   margin: 0;
   padding: var(--space-2);
@@ -435,7 +439,9 @@ p {
 
   .entrance__actions,
   .entrance__actions .action-button,
-  .entrance__actions .update-history-button {
+  .entrance__actions .update-history-button,
+  .entrance__hero-actions,
+  .entrance__hero-actions .action-button {
     width: 100%;
   }
 
